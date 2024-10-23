@@ -1,28 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\QuikTix\\TheCSharpers-QuikTix\\TheCSharpers-QuikTix.csproj": {}
+    "C:\\Users\\bstur\\CSCE547\\TheCSharpers-QuikTix\\TheCSharpers-QuikTix.csproj": {}
   },
   "projects": {
-    "C:\\QuikTix\\TheCSharpers-QuikTix\\TheCSharpers-QuikTix.csproj": {
+    "C:\\Users\\bstur\\CSCE547\\TheCSharpers-QuikTix\\TheCSharpers-QuikTix.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\QuikTix\\TheCSharpers-QuikTix\\TheCSharpers-QuikTix.csproj",
+        "projectUniqueName": "C:\\Users\\bstur\\CSCE547\\TheCSharpers-QuikTix\\TheCSharpers-QuikTix.csproj",
         "projectName": "TheCSharpers-QuikTix",
-        "projectPath": "C:\\QuikTix\\TheCSharpers-QuikTix\\TheCSharpers-QuikTix.csproj",
+        "projectPath": "C:\\Users\\bstur\\CSCE547\\TheCSharpers-QuikTix\\TheCSharpers-QuikTix.csproj",
         "packagesPath": "C:\\Users\\bstur\\.nuget\\packages\\",
-        "outputPath": "C:\\QuikTix\\TheCSharpers-QuikTix\\obj\\",
+        "outputPath": "C:\\Users\\bstur\\CSCE547\\TheCSharpers-QuikTix\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\bstur\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\bstur\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

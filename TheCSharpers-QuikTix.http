@@ -1,6 +1,0 @@
-@TheCSharpers_QuikTix_HostAddress = http://localhost:5122
-
-GET {{TheCSharpers_QuikTix_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
