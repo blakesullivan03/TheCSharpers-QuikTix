@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TheCSharpers-QuikTix")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0c40e3d47f5eb0bfa0b3d077067b46ae43218892")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d584642b33ef731f29d7826e52f9067e6caaa947")]
 [assembly: System.Reflection.AssemblyProductAttribute("TheCSharpers-QuikTix")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TheCSharpers-QuikTix")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
