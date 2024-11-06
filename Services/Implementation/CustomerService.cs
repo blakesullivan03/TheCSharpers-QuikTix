@@ -4,7 +4,17 @@ using TheCSharpers_QuikTix.Services.Interfaces;
 using TheCSharpers_QuikTix.Models;
 public class CustomerService
 {
-    private List<Customer> customers = new List<Customer>();
+    private List<Customer> customers;
+
+    private StorageService storageAccess;
+
+    // Constructor
+    public CustomerService(StorageService storageService)
+    {   
+        storageAccess = storageService;
+        customers = storageAccess.ReadCustomers();
+        Console.WriteLine(customers);
+    }
 
     // Add a New Customer
     public void AddCustomer(Customer customer)

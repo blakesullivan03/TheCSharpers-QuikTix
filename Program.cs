@@ -26,13 +26,15 @@ namespace TheCSharpers_QuikTix
             // Set up All Services
             var backendService = new StorageService();
             var movieService = new MovieService(backendService);
-            var customerService = new CustomerService();
+            var customerService = new CustomerService(backendService);
             var cartService = new CartService();
             var paymentService = new PaymentService();
 
             // Add a Customer to the Service
             // customerService.AddCustomer(customer);
-            Customer customer = customerService.GetAllCustomers()[0];
+            List<Customer> customers = customerService.GetAllCustomers();
+            Customer customer = customers[0];
+
 
             /*
             // Add a Few Sample Movies
