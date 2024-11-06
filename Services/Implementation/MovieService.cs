@@ -15,7 +15,6 @@ public class MovieService
     {
         storageAccess = be;
         movies = storageAccess.ReadMovies();
-        Console.WriteLine(movies);
     }
 
     public List<Movie> GetAllMovies()

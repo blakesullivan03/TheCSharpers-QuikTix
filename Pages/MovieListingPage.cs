@@ -45,6 +45,11 @@ namespace TheCSharpers_QuikTix.Pages
                     Console.WriteLine("Invalid quantity.");
                 }
             }
+            else
+            {
+                Console.WriteLine("No tickets added to cart.");
+                Environment.Exit(0);;
+            }
         }
     }
 }

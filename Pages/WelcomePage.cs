@@ -22,7 +22,7 @@ namespace TheCSharpers_QuikTix.Pages
             Console.WriteLine("Welcome to QuikTix!");
             Console.WriteLine();
             Console.WriteLine("Enter 'a' to view movies alphabetically, 's' to view soonest showtime, 't' for latest showtime:");
-            string choice = Console.ReadLine()?.ToLower();
+            var choice = Console.ReadLine()?.ToLower();
 
             var movies = _movieService.GetAllMovies();
 

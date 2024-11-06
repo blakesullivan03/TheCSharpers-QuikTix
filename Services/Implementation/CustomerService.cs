@@ -13,7 +13,6 @@ public class CustomerService
     {   
         storageAccess = storageService;
         customers = storageAccess.ReadCustomers();
-        Console.WriteLine(customers);
     }
 
     // Add a New Customer

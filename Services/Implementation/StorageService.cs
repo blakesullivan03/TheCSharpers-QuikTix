@@ -27,7 +27,7 @@ public class StorageService{
                 int.Parse(processed[5]));
                 movies.Add(movie);
 
-                Console.WriteLine(movie.Tickets);
+                //Console.WriteLine(movie.Tickets);
             }
         }
         return movies;
