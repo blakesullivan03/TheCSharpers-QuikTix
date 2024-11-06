@@ -62,5 +62,28 @@ public class CheckoutPage
             Console.WriteLine("Payment failed. Please try again.");
         }
     }
+
+    public Boolean ExitProgram()
+    {
+        // Decide to exit program or redirect to buy more tickets
+        Console.WriteLine("Do you want to buy more tickets? (yes/no): ");
+        string input = Console.ReadLine()?.ToLower();
+
+        if (input == "yes")
+        {
+            Console.WriteLine("Redirecting to ticket purchase...");
+            return false;
+        }
+        else if (input == "no")
+        {
+            Console.WriteLine("Thank you for using QuikTix. Goodbye!");
+            return true;
+        }
+        else
+        {
+            Console.WriteLine("Invalid input. Exiting the program.");
+            return true;
+        }
+    }
     
 }

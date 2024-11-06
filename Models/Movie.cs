@@ -35,5 +35,7 @@ namespace TheCSharpers_QuikTix.Models
                 return totalTickets;
             }
         }
+
+        
     }
 }
