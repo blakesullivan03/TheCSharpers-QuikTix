@@ -3,7 +3,8 @@ using System.Net.Mail;
 using Microsoft.VisualBasic;
 using TheCSharpers_QuikTix.Models;
 
-public class StorageService{
+public class StorageService
+{
 
     private String MovieFile = "movies.txt";
     private String CustomerFile = "customers.txt";
@@ -13,15 +14,15 @@ public class StorageService{
     {
         List<Movie> movies = new List<Movie>();
 
-        using(StreamReader sr = new StreamReader(MovieFile))
+        using (StreamReader sr = new StreamReader(MovieFile))
         {
             string? line;
-            while((line = sr.ReadLine()) != null)
+            while ((line = sr.ReadLine()) != null)
             {
                 String[] processed = line.Split('|');
-                Movie movie = new Movie(int.Parse(processed[0]), 
-                processed[1], 
-                processed[2], 
+                Movie movie = new Movie(int.Parse(processed[0]),
+                processed[1],
+                processed[2],
                 processed[3],
                 DateTime.Now.AddHours(int.Parse(processed[4])),
                 int.Parse(processed[5]));
@@ -37,10 +38,10 @@ public class StorageService{
     {
         List<Customer> customers = new List<Customer>();
 
-        using(StreamReader sr = new StreamReader(CustomerFile))
+        using (StreamReader sr = new StreamReader(CustomerFile))
         {
             string? line;
-            while((line = sr.ReadLine()) != null)
+            while ((line = sr.ReadLine()) != null)
             {
                 String[] processed = line.Split('|');
 
