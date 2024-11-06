@@ -14,12 +14,14 @@ namespace TheCSharpers_QuikTix
         {
             Boolean hasExited = false;
             // Create a New Customer
+            /*
             var customer = new Customer(
                 1,
                 "John Doe",
                 "john.doe@example.com",
                 "123-456-7890"
             );
+            */
 
             // Set up All Services
             var backendService = new StorageService();
@@ -59,6 +61,10 @@ namespace TheCSharpers_QuikTix
                 75
             ));
             */
+
+            var welcomePage = new WelcomePage(movieService);
+
+            var movieListingPage = new MovieListingPage(movieService, cartService);
 
             while (!hasExited)
             {
