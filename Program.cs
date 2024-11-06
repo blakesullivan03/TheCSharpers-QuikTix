@@ -78,13 +78,6 @@ namespace TheCSharpers_QuikTix
 
                 // Process Checkout
                 var checkoutPage = new CheckoutPage(cartService, paymentService, customer);
-                var paymentInfo = new PaymentInfo
-                {
-                    CardNumber = "1234-5678-9876-5432",
-                    CardHolderName = "John Doe",
-                    ExpiryDate = DateTime.Now.AddYears(2).ToString("MM/yyyy"),
-                    CVV = "123"
-                };
                 checkoutPage.DisplayCheckout();
 
                 // Display purchase history

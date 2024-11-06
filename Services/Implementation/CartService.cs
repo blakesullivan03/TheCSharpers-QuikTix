@@ -12,15 +12,21 @@ public class CartService
         }
         else
         {
+            Console.WriteLine();
             Console.WriteLine("Your Cart:");
-            foreach (var ticket in Cart.Tickets)
-            {
-                Console.WriteLine($"Movie: {ticket.Movie.Name}");
-                Console.WriteLine($"Quantity: {ticket.Quantity}");
-                Console.WriteLine($"Price: {ticket.Price}");
-                Console.WriteLine($"Total: {ticket.Quantity * ticket.Price}");
-                Console.WriteLine();
-            }
+
+            var movieName = Cart.Tickets.First().Movie.Name;
+            Console.WriteLine($"Movie: {movieName}");
+
+            var totalTicketsInCart = Cart.Tickets.Count;
+            Console.WriteLine($"Quantity: {totalTicketsInCart}");
+
+            var ticketPrice = Cart.Tickets.First().Price;
+            Console.WriteLine($"Price per Ticket: {ticketPrice}");
+
+            var totalAmount = Cart.Tickets.Sum(t => t.Quantity * t.Price);
+            Console.WriteLine($"Total Amount: {totalAmount}");
+            Console.WriteLine();
         }
         return Cart;
     }

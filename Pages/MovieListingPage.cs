@@ -33,11 +33,12 @@ namespace TheCSharpers_QuikTix.Pages
             Console.WriteLine($"Tickets Available: {movie.TicketsAvailable}");
 
             Console.WriteLine("Would you like to add tickets to your cart? (y/n)");
-            string input = Console.ReadLine();
-            if (input != null && input.ToLower() == "y")
+            string input = Console.ReadLine() ?? string.Empty;
+            if (input.ToLower() == "y")
             {
                 Console.WriteLine("How many tickets would you like?");
-                int quantity = int.Parse(Console.ReadLine());
+                string quantityString = Console.ReadLine() ?? string.Empty;
+                int quantity = Convert.ToInt32(quantityString);
                 if (quantity > 0 && quantity <= movie.TicketsAvailable)
                 {
                     Console.WriteLine($"Adding tickets to Cart for {movie.Name}");

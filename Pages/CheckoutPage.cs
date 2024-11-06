@@ -28,6 +28,13 @@ public class CheckoutPage
         Console.WriteLine("Checkout:");
         //Console.WriteLine($"Total Cost: {cart.TotalCost}");
 
+        //Display the Total Cost of the Cart (Regular Price, Bundle Total, Total with Taxes)
+        var totalAmount = cart.Tickets.Sum(t => t.Quantity * t.Price);
+        Console.WriteLine($"Total Cost: {totalAmount}");
+        Console.WriteLine($"Total Cost with Taxes: {(totalAmount * 0.07) + totalAmount}");
+
+        Console.WriteLine();
+
         Console.WriteLine("Enter Payment Details:");
         Console.Write("Card Number: ");
         string cardNumber = Console.ReadLine() ?? string.Empty;
@@ -67,7 +74,7 @@ public class CheckoutPage
     {
         // Decide to exit program or redirect to buy more tickets
         Console.WriteLine("Do you want to buy more tickets? (y/n): ");
-        string input = Console.ReadLine()?.ToLower();
+        string input = (Console.ReadLine() ?? string.Empty).ToLower();
 
         if (input == "y")
         {

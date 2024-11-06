@@ -18,6 +18,8 @@ namespace TheCSharpers_QuikTix.Pages
         public void DisplayMovies()
         {
             var movies = _movieService.GetAllMovies();
+            Console.WriteLine("Welcome to QuikTix!");
+            Console.WriteLine();
             Console.WriteLine("Available Movies:");
             foreach (var movie in movies)
             {

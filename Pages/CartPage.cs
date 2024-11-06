@@ -21,11 +21,12 @@ namespace TheCSharpers_QuikTix.Pages
             var cart = _cartService.GetCart();
         
             Console.WriteLine("Do you want to remove any tickets from your cart? (y/n)");
-            string input = Console.ReadLine();
-            if (input.ToLower() == "y")
+            string input = Console.ReadLine() ?? string.Empty;
+            if (input != null && input.ToLower() == "y")
             {
                 Console.WriteLine("Enter the name of the movie to remove:");
-                string movieName = Console.ReadLine();
+                string? movieNameInput = Console.ReadLine();
+                string movieName = movieNameInput ?? string.Empty;
                 var movie = cart.Tickets.FirstOrDefault(t => t.Movie.Name == movieName)?.Movie;
                 if (movie != null)
                 {
