@@ -66,15 +66,15 @@ public class CheckoutPage
     public Boolean ExitProgram()
     {
         // Decide to exit program or redirect to buy more tickets
-        Console.WriteLine("Do you want to buy more tickets? (yes/no): ");
+        Console.WriteLine("Do you want to buy more tickets? (y/n): ");
         string input = Console.ReadLine()?.ToLower();
 
-        if (input == "yes")
+        if (input == "y")
         {
             Console.WriteLine("Redirecting to ticket purchase...");
             return false;
         }
-        else if (input == "no")
+        else if (input == "n")
         {
             Console.WriteLine("Thank you for using QuikTix. Goodbye!");
             return true;

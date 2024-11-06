@@ -41,7 +41,7 @@ namespace TheCSharpers_QuikTix.Pages
                 if (quantity > 0 && quantity <= movie.TicketsAvailable)
                 {
                     Console.WriteLine($"Adding tickets to Cart for {movie.Name}");
-                    _cartService.AddTicketToCart(movie.Id, movie, quantity, 12.50f);  // Example ticket price
+                    _cartService.AddTicketToCart(movie, quantity);  // Example ticket price
                     Console.WriteLine("Tickets added to cart.");
                 }
                 else
