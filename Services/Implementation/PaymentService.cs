@@ -1,6 +1,7 @@
 using System.Linq;
 using TheCSharpers_QuikTix.Interfaces;
 using TheCSharpers_QuikTix.Models;
+using System.Text.RegularExpressions;
 public class PaymentService
 {
     // Process payment for the cart
@@ -26,13 +27,32 @@ public class PaymentService
     private bool ValidatePaymentInfo(PaymentInfo paymentInfo)
     {
         // Implement validation logic for card number, expiry date, CVV, etc.
-        if (string.IsNullOrWhiteSpace(paymentInfo.CardNumber))
+        if (string.IsNullOrWhiteSpace(paymentInfo.CardNumber) | string.IsNullOrWhiteSpace(paymentInfo.ExpiryDate) | string.IsNullOrWhiteSpace(paymentInfo.CVV) | string.IsNullOrWhiteSpace(paymentInfo.CardHolderName))
         {
             return false;
         }
-        else 
+
+        Regex r1= new Regex(@"^\d\d\d\d-\d\d\d\d-\d\d\d\d-\d\d\d\d$");
+
+        if (!(r1.Match(paymentInfo.CardNumber).Success))
         {
-            return true;
+            return false;
         }
+
+        Regex r2 = new Regex(@"^(0[1-9]|1[0-2])\/2[4-9]$");
+
+        if (!(r2.Match(paymentInfo.ExpiryDate).Success))
+        {
+            return false;
+        }
+
+        Regex r3 = new Regex(@"^\d\d\d$");
+
+        if (!(r3.Match(paymentInfo.CVV).Success))
+        {
+            return false;
+        }
+
+        return true;
     }
 }
