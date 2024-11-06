@@ -2,7 +2,8 @@ using System.Linq;
 using TheCSharpers_QuikTix.Interfaces;
 using TheCSharpers_QuikTix.Models;
 using System.Text.RegularExpressions;
-public class PaymentService
+using TheCSharpers_QuikTix.Services.Interfaces;
+public class PaymentService : IPaymentService
 {
     // Process payment for the cart
     public bool ProcessPayment(PaymentInfo paymentInfo, Cart cart, Customer customer)
@@ -32,7 +33,7 @@ public class PaymentService
             return false;
         }
 
-        Regex r1= new Regex(@"^\d\d\d\d-\d\d\d\d-\d\d\d\d-\d\d\d\d$");
+        Regex r1 = new Regex(@"^\d\d\d\d-\d\d\d\d-\d\d\d\d-\d\d\d\d$");
 
         if (!(r1.Match(paymentInfo.CardNumber).Success))
         {
@@ -54,5 +55,10 @@ public class PaymentService
         }
 
         return true;
+    }
+
+    bool IPaymentService.ValidatePaymentInfo(PaymentInfo paymentInfo)
+    {
+        throw new NotImplementedException();
     }
 }

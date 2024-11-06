@@ -1,6 +1,7 @@
 using TheCSharpers_QuikTix.Models;
+using TheCSharpers_QuikTix.Services.Interfaces;
 
-public class CartService
+public class CartService : ICartService
 {
     public Cart Cart { get; set; } = new Cart();
 
@@ -36,26 +37,26 @@ public class CartService
         Cart.Tickets.Clear();
     }
 
-public void AddTicketToCart(Movie movie, int quantity)
-{
-    // Check if enough tickets are available
-    if (movie.TicketsAvailable < quantity)
+    public void AddTicketToCart(Movie movie, int quantity)
     {
-        Console.WriteLine("Not enough tickets available.");
-        return;
-    }
+        // Check if enough tickets are available
+        if (movie.TicketsAvailable < quantity)
+        {
+            Console.WriteLine("Not enough tickets available.");
+            return;
+        }
 
-    // Select tickets to add and remove them from the movie's available tickets
-    var ticketsToAdd = movie.Tickets.Take(quantity).ToList();
-    foreach (var ticket in ticketsToAdd)
-    {
-        Cart.Tickets.Add(ticket);
-        movie.Tickets.Remove(ticket);  // Remove ticket from available tickets
-        
-    }
+        // Select tickets to add and remove them from the movie's available tickets
+        var ticketsToAdd = movie.Tickets.Take(quantity).ToList();
+        foreach (var ticket in ticketsToAdd)
+        {
+            Cart.Tickets.Add(ticket);
+            movie.Tickets.Remove(ticket);  // Remove ticket from available tickets
 
-    Console.WriteLine($"{quantity} tickets added to the cart for {movie.Name}.");
-}
+        }
+
+        Console.WriteLine($"{quantity} tickets added to the cart for {movie.Name}.");
+    }
 
 
     public void RemoveTicketFromCart(Movie movie)
@@ -67,5 +68,15 @@ public void AddTicketToCart(Movie movie, int quantity)
             movie.Tickets.Add(ticket); // Return ticket to available list
             Console.WriteLine("Ticket removed from cart and returned to available tickets.");
         }
+    }
+
+    public Cart DisplayCart()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AddTicketToCart(int id, Movie movie, int quantity, decimal price)
+    {
+        throw new NotImplementedException();
     }
 }

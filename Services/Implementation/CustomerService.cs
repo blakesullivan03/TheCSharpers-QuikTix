@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TheCSharpers_QuikTix.Services.Interfaces;
 using TheCSharpers_QuikTix.Models;
-public class CustomerService
+public class CustomerService : ICustomerService
 {
     private List<Customer> customers;
 
@@ -10,7 +10,7 @@ public class CustomerService
 
     // Constructor
     public CustomerService(StorageService storageService)
-    {   
+    {
         storageAccess = storageService;
         customers = storageAccess.ReadCustomers();
     }

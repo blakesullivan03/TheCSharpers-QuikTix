@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using TheCSharpers_QuikTix.Interfaces;
 using TheCSharpers_QuikTix.Models;
 
-public class MovieService
+public class MovieService : IMovieService
 {
     private List<Movie> movies;
     private StorageService storageAccess;
@@ -36,11 +36,16 @@ public class MovieService
     {
         movies.Add(movie);
     }
-    
+
     public void RemoveMovie(int id)
     {
         var movie = GetMovieById(id);
         if (movie != null)
             movies.Remove(movie);
+    }
+
+    IList<Movie> IMovieService.GetAllMovies()
+    {
+        throw new NotImplementedException();
     }
 }
