@@ -17,15 +17,9 @@ namespace TheCSharpers_QuikTix.Pages
         }
 
         // Display detailed information about a movie and option to add tickets to the cart
-        public void DisplayMovieDetails(string movieId)
+        public void DisplayMovieDetails(string movieName)
         {
-            var movie = _movieService.GetMovieByName(movieId);
-            //var movie = _movieService.GetMovieById(movieId);
-            if (movie == null)
-            {
-                Console.WriteLine("Movie not found.");
-                return;
-            }
+            var movie = _movieService.GetMovieByName(movieName);
 
             Console.WriteLine($"Movie: {movie.Name}");
             Console.WriteLine($"Genre: {movie.Genre}");

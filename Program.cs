@@ -72,14 +72,22 @@ namespace TheCSharpers_QuikTix
             {
                 // Display All Movies
                 welcomePage.DisplayMovies();
+
                 // Ask the User What Movie They Want to Watch
                 Console.WriteLine("Enter the Name of the Movie you Want to Watch:");
-                string? movieName = Console.ReadLine();
-                while (string.IsNullOrEmpty(movieName))
+                string movieName = Console.ReadLine() ?? string.Empty;
+
+                // Validate Input
+                var movie = movieService.GetMovieByName(movieName);
+                while (movie == null)
                 {
                     Console.WriteLine("Invalid Input. Please enter a Valid Movie Name:");
-                    movieName = Console.ReadLine();
+                    movieName = Console.ReadLine() ?? string.Empty;
+                    movie = movieService.GetMovieByName(movieName);
                 }
+
+
+                // Display Movie Details
                 Console.WriteLine();
                 movieListingPage.DisplayMovieDetails(movieName);
 
