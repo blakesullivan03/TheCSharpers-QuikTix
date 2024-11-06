@@ -22,14 +22,17 @@ namespace TheCSharpers_QuikTix
             );
 
             // Set up All Services
-            var movieService = new MovieService();
+            var backendService = new StorageService();
+            var movieService = new MovieService(backendService);
             var customerService = new CustomerService();
             var cartService = new CartService();
             var paymentService = new PaymentService();
 
             // Add a Customer to the Service
-            customerService.AddCustomer(customer);
+            // customerService.AddCustomer(customer);
+            Customer customer = customerService.GetAllCustomers()[0];
 
+            /*
             // Add a Few Sample Movies
             movieService.AddMovie(new Movie(
                 1,
@@ -55,9 +58,7 @@ namespace TheCSharpers_QuikTix
                 DateTime.Now.AddHours(4),
                 75
             ));
-            var welcomePage = new WelcomePage(movieService);
-
-            var movieListingPage = new MovieListingPage(movieService, cartService);
+            */
 
             while (!hasExited)
             {
@@ -72,9 +73,9 @@ namespace TheCSharpers_QuikTix
                 }
                 movieListingPage.DisplayMovieDetails(movieId);
 
-                // Display The Cart
-                var cartPage = new CartPage(cartService);
-                cartPage.DisplayCart();
+            // Display The Cart
+            var cartPage = new CartPage(cartService);
+            cartPage.DisplayCart();
 
                 // Process Checkout
                 var checkoutPage = new CheckoutPage(cartService, paymentService, customer);
