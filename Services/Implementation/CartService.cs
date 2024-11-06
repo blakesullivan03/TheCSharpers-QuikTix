@@ -22,7 +22,7 @@ public class CartService
             Console.WriteLine($"Quantity: {totalTicketsInCart}");
 
             var ticketPrice = Cart.Tickets.First().Price;
-            Console.WriteLine($"Price per Ticket: {ticketPrice}");
+            Console.WriteLine($"Price Per Ticket: {ticketPrice}");
 
             var totalAmount = Cart.Tickets.Sum(t => t.Quantity * t.Price);
             Console.WriteLine($"Total Amount: {totalAmount}");
