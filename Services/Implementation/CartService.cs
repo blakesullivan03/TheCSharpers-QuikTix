@@ -51,6 +51,7 @@ public void AddTicketToCart(Movie movie, int quantity)
     {
         Cart.Tickets.Add(ticket);
         movie.Tickets.Remove(ticket);  // Remove ticket from available tickets
+        
     }
 
     Console.WriteLine($"{quantity} tickets added to the cart for {movie.Name}.");

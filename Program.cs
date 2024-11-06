@@ -73,24 +73,26 @@ namespace TheCSharpers_QuikTix
                 // Display All Movies
                 welcomePage.DisplayMovies();
                 // Ask the User What Movie They Want to Watch
-                Console.WriteLine("Enter the ID of the movie you want to watch:");
-                int movieId;
-                while (!int.TryParse(Console.ReadLine(), out movieId))
+                Console.WriteLine("Enter the Name of the Movie you Want to Watch:");
+                string? movieName = Console.ReadLine();
+                while (string.IsNullOrEmpty(movieName))
                 {
-                    Console.WriteLine("Invalid Input. Please enter a Valid Movie ID:");
+                    Console.WriteLine("Invalid Input. Please enter a Valid Movie Name:");
+                    movieName = Console.ReadLine();
                 }
-                movieListingPage.DisplayMovieDetails(movieId);
+                Console.WriteLine();
+                movieListingPage.DisplayMovieDetails(movieName);
 
-            // Display The Cart
-            var cartPage = new CartPage(cartService);
-            cartPage.DisplayCart();
+                // Display The Cart
+                var cartPage = new CartPage(cartService);
+                cartPage.DisplayCart();
 
                 // Process Checkout
                 var checkoutPage = new CheckoutPage(cartService, paymentService, customer);
                 checkoutPage.DisplayCheckout();
 
                 // Display purchase history
-                Console.WriteLine("Purchase History:");
+                Console.WriteLine("\nPurchase History:");
                 foreach (var ticket in customer.PurchaseHistory)
                 {
                     Console.WriteLine($"Movie: {ticket.Movie.Name}, Quantity: {ticket.Quantity}, Price: {ticket.Price}");

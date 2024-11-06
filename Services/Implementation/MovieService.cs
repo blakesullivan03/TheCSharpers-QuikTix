@@ -28,6 +28,11 @@ public class MovieService
         return movies.FirstOrDefault(m => m.Id == id)!;
     }
 
+    public Movie GetMovieByName(string name)
+    {
+        return movies.FirstOrDefault(m => m.Name == name)!;
+    }
+
     public void AddMovie(Movie movie)
     {
         movies.Add(movie);
