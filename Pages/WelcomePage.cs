@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using TheCSharpers_QuikTix.Services;
 using TheCSharpers_QuikTix.Models;
+using System.Collections.Generic;
 
 namespace TheCSharpers_QuikTix.Pages
 {
@@ -14,12 +16,25 @@ namespace TheCSharpers_QuikTix.Pages
             _movieService = movieService;
         }
 
-        // Display all movies with name, genre, and description
+        // Display sorted movies based on user choice
         public void DisplayMovies()
         {
-            var movies = _movieService.GetAllMovies();
             Console.WriteLine("Welcome to QuikTix!");
             Console.WriteLine();
+            Console.WriteLine("Enter 'a' to view movies alphabetically, 's' to view soonest showtime, 't' for latest showtime:");
+            string choice = Console.ReadLine()?.ToLower();
+
+            var movies = _movieService.GetAllMovies();
+
+            // Sorting based on user choice
+            movies = choice switch
+            {
+                "a" => movies.OrderBy(m => m.Name).ToList(),
+                "s" => movies.OrderBy(m => m.Showtime).ToList(),
+                "t" => movies.OrderByDescending(m => m.Showtime).ToList(),
+                _ => movies // Default if input is invalid
+            };
+
             Console.WriteLine("Available Movies:");
             foreach (var movie in movies)
             {
