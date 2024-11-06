@@ -55,15 +55,14 @@ namespace TheCSharpers_QuikTix
                 DateTime.Now.AddHours(4),
                 75
             ));
+            var welcomePage = new WelcomePage(movieService);
+
+            var movieListingPage = new MovieListingPage(movieService, cartService);
 
             while (!hasExited)
             {
                 // Display All Movies
-                var welcomePage = new WelcomePage(movieService);
                 welcomePage.DisplayMovies();
-
-                // Display Movie Details
-                var movieListingPage = new MovieListingPage(movieService, cartService);
                 // Ask the User What Movie They Want to Watch
                 Console.WriteLine("Enter the ID of the movie you want to watch:");
                 int movieId;
