@@ -3,49 +3,57 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using TheCSharpers_QuikTix.Interfaces;
 using TheCSharpers_QuikTix.Models;
 
 public class MovieService : IMovieService
 {
-    private List<Movie> movies;
-    private StorageService storageAccess;
+    private readonly AppDbContext _context;
 
-    public MovieService(StorageService be)
+    public MovieService(AppDbContext context)
     {
-        storageAccess = be;
-        movies = storageAccess.ReadMovies();
+        _context = context;
     }
 
-    public List<Movie> GetAllMovies()
+    public IEnumerable<Movie> GetMovies()
     {
-        return movies;
+        return _context.Movies.ToList();
     }
 
     public Movie GetMovieById(int id)
     {
-        return movies.FirstOrDefault(m => m.Id == id)!;
-    }
-
-    public Movie GetMovieByName(string name)
-    {
-        return movies.FirstOrDefault(m => m.Name == name)!;
+        var movie = _context.Movies.FirstOrDefault(m => m.Id == id);
+        if (movie == null)
+        {
+            throw new KeyNotFoundException($"Movie with id {id} not found.");
+        }
+        return movie;
     }
 
     public void AddMovie(Movie movie)
     {
-        movies.Add(movie);
+        _context.Movies.Add(movie);
+        _context.SaveChanges();
     }
 
-    public void RemoveMovie(int id)
+    public void UpdateMovie(int id, Movie updatedMovie)
     {
-        var movie = GetMovieById(id);
+        var movie = _context.Movies.Find(id);
         if (movie != null)
-            movies.Remove(movie);
+        {
+            movie.Title = updatedMovie.Title;
+            movie.Genre = updatedMovie.Genre;
+            movie.Description = updatedMovie.Description;
+            _context.SaveChanges();
+        }
     }
 
-    IList<Movie> IMovieService.GetAllMovies()
+    public void DeleteMovie(int id)
     {
-        throw new NotImplementedException();
+        var movie = _context.Movies.Find(id);
+        if (movie != null)
+        {
+            _context.Movies.Remove(movie);
+            _context.SaveChanges();
+        }
     }
 }

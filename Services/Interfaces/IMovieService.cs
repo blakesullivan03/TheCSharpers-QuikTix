@@ -1,13 +1,13 @@
+using System.Collections.Generic;
 using TheCSharpers_QuikTix.Models;
 
-namespace TheCSharpers_QuikTix.Interfaces 
+public interface IMovieService
 {
-  public interface IMovieService 
-  {
-    IList<Movie> GetAllMovies();
+    IEnumerable<Movie> GetMovies();
     Movie GetMovieById(int id);
     void AddMovie(Movie movie);
-    void RemoveMovie(int id);
-  }
-
+    void UpdateMovie(int id, Movie updatedMovie);
+    void DeleteMovie(int id);
 }
+
+
