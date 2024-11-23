@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using TheCSharpers_QuikTix.Models;
 
 namespace TheCSharpers_QuikTix.Services.Interfaces
@@ -11,4 +11,4 @@ namespace TheCSharpers_QuikTix.Services.Interfaces
         // Validate the provided payment information
         bool ValidatePaymentInfo(PaymentInfo paymentInfo);
     }
-}
+}*/

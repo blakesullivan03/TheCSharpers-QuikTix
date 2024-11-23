@@ -1,4 +1,4 @@
-using TheCSharpers_QuikTix.Models;
+/*using TheCSharpers_QuikTix.Models;
 namespace TheCSharpers_QuikTix.Services.Interfaces
 {
     public interface ICartService
@@ -10,4 +10,4 @@ namespace TheCSharpers_QuikTix.Services.Interfaces
     }
 
     
-}
+}*/
