@@ -7,9 +7,9 @@ using TheCSharpers_QuikTix.Models;
 
 public class MovieService : IMovieService
 {
-    private readonly AppDbContext _context;
+    private readonly QuikTixDbContext _context;
 
-    public MovieService(AppDbContext context)
+    public MovieService(QuikTixDbContext context)
     {
         _context = context;
     }
