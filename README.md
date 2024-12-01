@@ -19,7 +19,7 @@ Follow these steps to set up the project and run it locally on your machine.
    cd QuikTix
 2. **Install Dependecies**
    dotnet restore
-3. **Create an Instance of the Local Database using LocalDB**
+3. **Create an Instance of the Local Database using LocalDB**<br />
    Verify LocalDB is installed
    sqllocaldb i
    This will show a list of LocalDB instances. If you see (localdb)\MSSQLLocalDB in the list, LocalDB is installed.
