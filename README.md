@@ -20,20 +20,20 @@ Follow these steps to set up the project and run it locally on your machine.
 2. **Install Dependecies**
    dotnet restore
 3. **Create an Instance of the Local Database using LocalDB**<br />
-   Verify LocalDB is installed
-   sqllocaldb i
+   Verify LocalDB is installed<br />
+   sqllocaldb i<br />
    This will show a list of LocalDB instances. If you see (localdb)\MSSQLLocalDB in the list, LocalDB is installed.
 
-   Create the Database
-   dotnet ef database update
+   Create the Database<br />
+   dotnet ef database update<br />
    This will use Entity Framework Core to create a LocalDB instance named QuikTixDb and apply all necessary migrations
 
-   Set your Connection String
-   Ensure the connection string in appsettings.Development.json looks like this:
+   Set your Connection String<br />
+   Ensure the connection string in appsettings.Development.json looks like this:<br />
      "ConnectionStrings": {
     "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=QuikTixDb;Trusted_Connection=True;"
      }
-4. **Run the Application**
-   dotnet run
+4. **Run the Application**<br />
+   dotnet run<br />
    Once the application is running, you can access the API via Swagger UI at http://localhost:5056/swagger to test the API endpoints.
    
