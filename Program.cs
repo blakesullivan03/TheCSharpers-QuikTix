@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TheCSharpers_QuikTix.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,8 @@ builder.Services.AddDbContext<QuikTixDbContext>(options =>
 
 // Add custom services (e.g., Movie, Cart, Review services)
 builder.Services.AddScoped<IMovieService, MovieService>();
-//builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<ITicketService, TicketService>();
 //builder.Services.AddScoped<IReviewService, ReviewService>();
 
 

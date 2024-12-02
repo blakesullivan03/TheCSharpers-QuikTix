@@ -1,83 +1,90 @@
-/*using TheCSharpers_QuikTix.Models;
-using TheCSharpers_QuikTix.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using TheCSharpers_QuikTix.Models;
 
 public class CartService : ICartService
 {
-    public Cart Cart { get; set; } = new Cart();
+    private readonly QuikTixDbContext _context;
 
-    public Cart GetCart()
+    public CartService(QuikTixDbContext context)
     {
-        if (Cart.Tickets.Count == 0)
+        _context = context;
+    }
+
+    public IEnumerable<Cart> GetCartItems()
+    {
+        return _context.Carts.ToList();  // Retrieve all cart items
+    }
+
+    public Cart GetCartItem(int movieId, string ticketType)
+    {
+        var item = _context.Carts.FirstOrDefault(c => c.MovieId == movieId && c.TicketType == ticketType);
+        if (item == null)
         {
-            Console.WriteLine("Your cart is empty.");
+            throw new KeyNotFoundException($"Cart item with MovieId {movieId} and TicketType {ticketType} not found.");
+        }
+        return item;
+    }
+
+    public void AddToCart(Cart item)
+    {
+        if (item.Quantity <= 0) throw new ArgumentException("Quantity must be positive.");
+
+        var existingItem = _context.Carts.FirstOrDefault(
+            c => c.MovieId == item.MovieId && c.TicketType == item.TicketType
+        );
+
+        if (existingItem != null)
+        {
+            existingItem.Quantity += item.Quantity;  // Update the quantity of existing item
+            _context.SaveChanges();  // Persist the change
         }
         else
         {
-            Console.WriteLine();
-            Console.WriteLine("Your Cart:");
-
-            var movieName = Cart.Tickets.First().Movie.Name;
-            Console.WriteLine($"Movie: {movieName}");
-
-            var totalTicketsInCart = Cart.Tickets.Count;
-            Console.WriteLine($"Quantity: {totalTicketsInCart}");
-
-            var ticketPrice = Cart.Tickets.First().Price;
-            Console.WriteLine($"Price Per Ticket: {ticketPrice}");
-
-            var totalAmount = Cart.Tickets.Sum(t => t.Quantity * t.Price);
-            Console.WriteLine($"Total Amount: {totalAmount}");
-            Console.WriteLine();
+            _context.Carts.Add(item);  // Add new cart item
+            _context.SaveChanges();
         }
-        return Cart;
+    }
+
+    public void UpdateCartItem(int movieId, string ticketType, Cart updatedItem)
+    {
+        var item = _context.Carts.FirstOrDefault(c => c.MovieId == movieId && c.TicketType == ticketType);
+        if (item != null)
+        {
+            item.Quantity = updatedItem.Quantity;
+            item.Price = updatedItem.Price;
+            _context.SaveChanges();  // Persist the update
+        }
+        else
+        {
+            throw new KeyNotFoundException($"Cart item with MovieId {movieId} and TicketType {ticketType} not found.");
+        }
+    }
+
+    public void RemoveFromCart(int movieId, string ticketType)
+    {
+        var item = _context.Carts.FirstOrDefault(c => c.MovieId == movieId && c.TicketType == ticketType);
+        if (item != null)
+        {
+            _context.Carts.Remove(item);  // Remove the cart item
+            _context.SaveChanges();  // Persist the removal
+        }
+        else
+        {
+            throw new KeyNotFoundException($"Cart item with MovieId {movieId} and TicketType {ticketType} not found.");
+        }
     }
 
     public void ClearCart()
     {
-        Cart.Tickets.Clear();
+        var items = _context.Carts.ToList();  // Retrieve all cart items
+        _context.Carts.RemoveRange(items);  // Remove all items
+        _context.SaveChanges();  // Persist the changes
     }
 
-    public void AddTicketToCart(Movie movie, int quantity)
+    public decimal CalculateTotal()
     {
-        // Check if enough tickets are available
-        if (movie.TicketsAvailable < quantity)
-        {
-            Console.WriteLine("Not enough tickets available.");
-            return;
-        }
-
-        // Select tickets to add and remove them from the movie's available tickets
-        var ticketsToAdd = movie.Tickets.Take(quantity).ToList();
-        foreach (var ticket in ticketsToAdd)
-        {
-            Cart.Tickets.Add(ticket);
-            movie.Tickets.Remove(ticket);  // Remove ticket from available tickets
-
-        }
-
-        Console.WriteLine($"{quantity} tickets added to the cart for {movie.Name}.");
-    }
-
-
-    public void RemoveTicketFromCart(Movie movie)
-    {
-        var ticket = Cart.Tickets.FirstOrDefault(t => t.Movie.Id == movie.Id);
-        if (ticket != null)
-        {
-            Cart.Tickets.Remove(ticket);
-            movie.Tickets.Add(ticket); // Return ticket to available list
-            Console.WriteLine("Ticket removed from cart and returned to available tickets.");
-        }
-    }
-
-    public Cart DisplayCart()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void AddTicketToCart(int id, Movie movie, int quantity, decimal price)
-    {
-        throw new NotImplementedException();
+        return _context.Carts.Sum(item => item.Price * item.Quantity);  // Calculate total price of items in the cart
     }
 }
-*/

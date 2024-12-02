@@ -5,6 +5,8 @@ using TheCSharpers_QuikTix.Models;
 public class QuikTixDbContext : DbContext
 {
     public DbSet<Movie> Movies { get; set; } = null!;
+    public DbSet<Cart> Carts { get; set; } = null!;
+    public DbSet<Ticket> Tickets {get; set; } = null!;
     public QuikTixDbContext(DbContextOptions<QuikTixDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -16,5 +18,16 @@ public class QuikTixDbContext : DbContext
             entity.HasKey(m => m.Id);
             entity.Property(m => m.Title).IsRequired();
         });
+
+        modelBuilder.Entity<Cart>(entity =>
+        {
+            entity.HasKey(c => c.CartId);
+        });
+
+        modelBuilder.Entity<Ticket>(entity =>
+        {
+            entity.HasKey(t => t.Id);
+        });
+
     }
 }
