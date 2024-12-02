@@ -14,33 +14,47 @@ namespace TheCSharpers_QuikTix.Services
             _context = context;
         }
 
-        public IEnumerable<Ticket> GetTickets()
+        public IEnumerable<Ticket> GetTickets(int movieId)
         {
-            return _context.Tickets.Include(t => t.Movie).ToList();
+            return _context.Tickets.Where(t => t.MovieId == movieId).ToList();
         }
 
-        public Ticket GetTicketById(int id)
+        public void AddTicket(int movieId, string ticketType, int quantity)
         {
-            var ticket = _context.Tickets.Include(t => t.Movie).FirstOrDefault(t => t.Id == id);
+            var movie = _context.Movies.FirstOrDefault(m => m.Id == movieId);
+            if (movie == null)
+            {
+                throw new Exception("Movie not found.");
+            }
+
+            var ticket = _context.Tickets.FirstOrDefault(t => t.MovieId == movieId && t.TicketType == ticketType);
             if (ticket == null)
             {
-                throw new KeyNotFoundException($"Ticket with id {id} not found.");
+                throw new Exception("Ticket type not found for the movie.");
             }
-            return ticket;
-        }
 
-        public void AddTicket(Ticket ticket)
-        {
-            _context.Tickets.Add(ticket);
+            // Add the ticket to the cart
+            var cartItem = new Cart
+            {
+                MovieId = movieId,
+                TicketType = ticketType,
+                Quantity = quantity,
+                Price = ticket.Price * quantity
+            };
+            _context.Cart.Add(cartItem);
+
+            // Update ticket availability
+            movie.TicketCount -= quantity;
+
             _context.SaveChanges();
         }
 
-        public void UpdateTicket(int id, Ticket updatedTicket)
+        public void UpdateTicket(int id, Ticket updatedTicket, Movie movie)
         {
             var ticket = _context.Tickets.FirstOrDefault(t => t.Id == id);
             if (ticket != null)
             {
-                ticket.Quantity = updatedTicket.Quantity;
+                movie.TicketCount = movie.TicketCount;
                 ticket.Price = updatedTicket.Price;
                 ticket.TicketType = updatedTicket.TicketType;
 
@@ -58,10 +72,16 @@ namespace TheCSharpers_QuikTix.Services
             }
         }
 
-        public IEnumerable<Ticket> GetTicketsByMovieId(int movieId)
+        public decimal GetTicketPrice(int id)
         {
-            return _context.Tickets.Where(t => t.MovieId == movieId).ToList();
+            var ticket = _context.Tickets.FirstOrDefault(t => t.Id == id);
+            if (ticket != null)
+            {
+                return ticket.Price;
+            }
+            return 0;
         }
+
     }
 }
 

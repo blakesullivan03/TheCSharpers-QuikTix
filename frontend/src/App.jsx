@@ -4,10 +4,12 @@ import WelcomePage from "./pages/WelcomePage";
 import MovieListPage from "./pages/MovieListPage";
 import MovieDetailsPage from "./pages/MovieDetailsPage";
 import CartPage from "./pages/CartPage";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <Router>
+      <NavBar />
       <Routes>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/movies" element={<MovieListPage />} />

@@ -60,6 +60,18 @@ namespace TheCSharpers_QuikTix.Controllers
             _movieService.DeleteMovie(id);
             return NoContent();
         }
-    }
 
+        //Add Review
+        [HttpPost]
+        public IActionResult AddReview([FromBody] Review review)
+        {
+            if (review.Rating < 1 || review.Rating > 5)
+            {
+                return BadRequest("Rating should be between 1 and 5.");
+            }
+            
+            _movieService.AddReviewForMovie(review.MovieId, review);
+            return Ok();
+        }
+    }   
 }

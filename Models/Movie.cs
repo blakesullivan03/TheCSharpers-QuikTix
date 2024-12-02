@@ -14,8 +14,11 @@ namespace TheCSharpers_QuikTix.Models
 
         public double? Rating { get; set; } // Nullable to allow unrated movies
 
+        public required List<Review> Reviews { get; set; } = new List<Review>(); // Updated from Review to Reviews
+
         public DateTime ReleaseDate { get; set; }
 
         public int TicketCount { get; set; } // Tracks tickets available for the movie
+        
     }
 }

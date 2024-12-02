@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getMovies, addTicketToCart } from "../apiService";
 
 function MovieDetailsPage() {
+  const navigate = useNavigate();
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -15,16 +16,23 @@ function MovieDetailsPage() {
   }, [movieId]);
 
   const handleAddToCart = () => {
-    addTicketToCart(movie.id, quantity).then(() => alert("Ticket added to cart"));
+    addTicketToCart(movie.id, quantity)
+      .then(() => {
+        alert("Ticket added to cart");
+        navigate("/cart"); // Navigate to the cart page
+      })
+      .catch((error) => console.error(error));
   };
-
+  
   if (!movie) return <div>Loading...</div>;
 
   return (
     <div>
       <h1>{movie.title}</h1>
+      <p>Genre: {movie.genre}</p>
       <p>{movie.description}</p>
-      <p>Price: ${movie.ticketPrice}</p>
+      <p>Show Time: {movie.releaseDate} </p>
+      <p>Available Tickets: {movie.ticketCount} </p>
       <input
         type="number"
         value={quantity}
