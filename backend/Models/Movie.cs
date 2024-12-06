@@ -6,7 +6,7 @@ namespace TheCSharpers_QuikTix.Models
     {
         public int Id { get; set; }
 
-        public required string Title { get; set; } // Updated from Name to Title
+        public required string Title { get; set; }
 
         public required string Genre { get; set; }
 
@@ -17,5 +17,7 @@ namespace TheCSharpers_QuikTix.Models
         public DateTime ReleaseDate { get; set; }
 
         public int TicketCount { get; set; } // Tracks tickets available for the movie
+
+        public required string ImagePath { get; set; } // Path to the local image
     }
 }
