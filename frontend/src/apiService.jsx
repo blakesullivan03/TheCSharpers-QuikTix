@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:7267/api", // Backend base URL
+  baseURL: "http://localhost:5056/api", // Backend base URL
 });
 
 // Fetch list of movies from the backend

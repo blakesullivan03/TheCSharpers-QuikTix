@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using TheCSharpers_QuikTix.Services.Interfaces;
 using TheCSharpers_QuikTix.Services.Implementation;
+using TheCSharpers_QuikTix.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -19,8 +19,15 @@ builder.Services.AddScoped<IMovieService, MovieService>();
 //builder.Services.AddScoped<ICartService, CartService>();
 //builder.Services.AddScoped<IReviewService, ReviewService>();
 
-
 var app = builder.Build();
+
+// Ensure the database is created and seed the data
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<QuikTixDbContext>();
+    // Call the MovieSeeder method to seed the movies into the database
+    MovieSeeder.SeedMovies(context);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

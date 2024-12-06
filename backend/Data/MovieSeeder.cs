@@ -60,8 +60,8 @@ namespace TheCSharpers_QuikTix.Data
                         ReleaseDate = new DateTime(2014, 11, 7),
                         TicketCount = 45,
                         ImagePath = "assets/images/interstellar.jpg"
-                    },
-                    new Movie
+                    }
+                    /*new Movie
                     {
                         Title = "Parasite",
                         Genre = "Thriller",
@@ -160,7 +160,7 @@ namespace TheCSharpers_QuikTix.Data
                         ReleaseDate = new DateTime(1942, 11, 26),
                         TicketCount = 25,
                         ImagePath = "assets/images/casablanca.jpg"
-                    }
+                    }*/
                 };
 
                 context.Movies.AddRange(movies);

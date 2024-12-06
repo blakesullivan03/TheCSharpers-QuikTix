@@ -14,8 +14,15 @@ function MovieListPage() {
       <h1>Available Movies</h1>
       <ul>
         {movies.map((movie) => (
-          <li key={movie.id}>
-            <Link to={`/Movies/${movie.id}`}>{movie.title}</Link> {/* Link to Movie Details Page */}
+          <li key={movie.id} style={{ marginBottom: "20px" }}>
+            <h3>{movie.title}</h3>
+            <p><strong>Genre:</strong> {movie.genre}</p>
+            <p><strong>Description:</strong> {movie.description}</p>
+            <p><strong>Rating:</strong> {movie.rating}</p>
+            <p><strong>Release Date:</strong> {new Date(movie.releaseDate).toLocaleDateString()}</p>
+            <p><strong>Tickets Available:</strong> {movie.ticketCount}</p>
+            <img src={movie.imagePath} alt={movie.title} style={{ width: "150px", height: "auto" }} />
+            <Link to={`/Movies/${movie.id}`}>View Details</Link>
           </li>
         ))}
       </ul>
