@@ -4,14 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using TheCSharpers_QuikTix.Data;
 
 #nullable disable
 
 namespace TheCSharpers_QuikTix.Migrations
 {
     [DbContext(typeof(QuikTixDbContext))]
-    [Migration("20241206073524_AddImagePathToMovies")]
-    partial class AddImagePathToMovies
+    [Migration("20241208175256_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,6 +29,9 @@ namespace TheCSharpers_QuikTix.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Genre")
                         .IsRequired()

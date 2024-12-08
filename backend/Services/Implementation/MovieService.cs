@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TheCSharpers_QuikTix.Models;
-using TheCSharpers_QuikTix.Services.Interfaces;
+using TheCSharpers_QuikTix.Data;
+using TheCSharpers_QuikTix.Services;
 
-namespace TheCSharpers_QuikTix.Services.Implementation
+namespace TheCSharpers_QuikTix.Services
 {
     public class MovieService : IMovieService
     {
@@ -19,6 +20,31 @@ namespace TheCSharpers_QuikTix.Services.Implementation
         public IEnumerable<Movie> GetMovies()
         {
             return _context.Movies.ToList();
+        }
+
+        public IEnumerable<Movie> GetMovies(SortCriteria sortBy)
+        {
+            switch (sortBy)
+            {
+                case SortCriteria.AtoZ:
+                    return _context.Movies.OrderBy(m => m.Title);
+                case SortCriteria.ZtoA:
+                    return _context.Movies.OrderByDescending(m => m.Title);
+                case SortCriteria.ReleaseDateAsc:
+                    return _context.Movies.OrderBy(m => m.ReleaseDate);
+                case SortCriteria.ReleaseDateDesc:
+                    return _context.Movies.OrderByDescending(m => m.ReleaseDate);
+                case SortCriteria.DurationAsc:
+                    return _context.Movies.OrderBy(m => m.Duration);
+                case SortCriteria.DurationDesc:
+                    return _context.Movies.OrderByDescending(m => m.Duration);
+                case SortCriteria.BestRated:
+                    return _context.Movies.OrderByDescending(m => m.Rating);
+                case SortCriteria.Popular:
+                    return _context.Movies.OrderBy(m => m.TicketCount);
+                default:
+                    return _context.Movies;  // Default to no sorting
+            }
         }
 
         // Get a movie by its ID

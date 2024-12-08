@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using TheCSharpers_QuikTix.Models;
 
-namespace TheCSharpers_QuikTix.Services.Interfaces
+namespace TheCSharpers_QuikTix.Services
 {
     public interface IMovieService
     {
         // Get all movies
         IEnumerable<Movie> GetMovies();
+
+        IEnumerable<Movie> GetMovies(SortCriteria sortBy);
 
         // Get a movie by its ID
         Movie GetMovieById(int id);

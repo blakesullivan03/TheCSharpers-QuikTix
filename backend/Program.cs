@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using TheCSharpers_QuikTix.Services.Interfaces;
-using TheCSharpers_QuikTix.Services.Implementation;
+using TheCSharpers_QuikTix.Services;
 using TheCSharpers_QuikTix.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,8 +13,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<QuikTixDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
 // Add custom services (e.g., Movie, Cart, Review services)
 builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
 //builder.Services.AddScoped<ICartService, CartService>();
 //builder.Services.AddScoped<IReviewService, ReviewService>();
 

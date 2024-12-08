@@ -20,9 +20,11 @@ namespace TheCSharpers_QuikTix.Migrations
                     Title = table.Column<string>(type: "TEXT", nullable: false),
                     Genre = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Duration = table.Column<int>(type: "INTEGER", nullable: false),
                     Rating = table.Column<double>(type: "REAL", nullable: true),
                     ReleaseDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    TicketCount = table.Column<int>(type: "INTEGER", nullable: false)
+                    TicketCount = table.Column<int>(type: "INTEGER", nullable: false),
+                    ImagePath = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
