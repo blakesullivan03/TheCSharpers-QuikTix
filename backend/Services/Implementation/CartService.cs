@@ -14,7 +14,7 @@ public class CartService : ICartService
 
     public IEnumerable<Cart> GetCartItems()
     {
-        return _context.Carts.ToList();  // Retrieve all cart items
+        return _context.Carts.ToList();  // Retrieve All Cart Items
     }
 
     public Cart GetCartItem(int movieId, string ticketType)

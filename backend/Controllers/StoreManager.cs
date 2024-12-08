@@ -16,7 +16,7 @@ namespace TheCSharpers_QuikTix.Controllers
             _ticketService = ticketService;
         }
 
-        // GET: api/ticket/{id}
+        /* GET: api/ticket/{id}
         [HttpGet("{id}")]
         public ActionResult<Ticket> GetTicketById(int id)
         {
@@ -29,18 +29,18 @@ namespace TheCSharpers_QuikTix.Controllers
             {
                 return NotFound(ex.Message);
             }
-        }
+        }*/
 
         // GET: api/ticket/movie/{movieId}
-        [HttpGet("movie/{movieId}")]
+        /*[HttpGet("movie/{movieId}")]
         public ActionResult<IEnumerable<Ticket>> GetTicketsByMovieId(int movieId)
         {
-            var tickets = _ticketService.GetTicketsByMovieId(movieId);
+            var tickets = _ticketService.GetTicketByMovieId(movieId);
             return Ok(tickets);
-        }
+        }*/
 
         // POST: api/ticket
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult AddTicket([FromBody] Ticket ticket)
         {
             if (ticket == null)
@@ -48,9 +48,8 @@ namespace TheCSharpers_QuikTix.Controllers
                 return BadRequest("Ticket data is required.");
             }
 
-            _ticketService.AddTicket(ticket);
-            return CreatedAtAction(nameof(GetTicketById), new { id = ticket.Id }, ticket);
-        }
+            _ticketService.AddTicket(ticket.MovieId, ticket.TicketType, ticket.Quantity);
+        }*/
 
         // PUT: api/ticket/{id}
         [HttpPut("{id}")]
@@ -63,7 +62,7 @@ namespace TheCSharpers_QuikTix.Controllers
 
             try
             {
-                _ticketService.UpdateTicket(id, updatedTicket);
+                //_ticketService.UpdateTicket(id, updatedTicket);
                 return NoContent();  // 204 No Content
             }
             catch (KeyNotFoundException ex)

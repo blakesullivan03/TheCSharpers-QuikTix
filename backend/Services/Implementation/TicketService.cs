@@ -1,10 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using TheCSharpers_QuikTix.Models;
 using System.Collections.Generic;
 using System.Linq;
+using TheCSharpers_QuikTix.Models;
 
-namespace TheCSharpers_QuikTix.Services
-{
     public class TicketService : ITicketService
     {
         private readonly QuikTixDbContext _context;
@@ -17,6 +15,11 @@ namespace TheCSharpers_QuikTix.Services
         public IEnumerable<Ticket> GetTickets(int movieId)
         {
             return _context.Tickets.Where(t => t.MovieId == movieId).ToList();
+        }
+
+        public Ticket GetTicketById(int id)
+        {
+            return _context.Tickets.FirstOrDefault(t => t.Id == id)!;
         }
 
         public void AddTicket(int movieId, string ticketType, int quantity)
@@ -41,7 +44,7 @@ namespace TheCSharpers_QuikTix.Services
                 Quantity = quantity,
                 Price = ticket.Price * quantity
             };
-            _context.Cart.Add(cartItem);
+            //_context.Cart.Add(cartItem);
 
             // Update ticket availability
             movie.TicketCount -= quantity;
@@ -83,5 +86,5 @@ namespace TheCSharpers_QuikTix.Services
         }
 
     }
-}
+//}
 

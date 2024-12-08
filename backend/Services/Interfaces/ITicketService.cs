@@ -3,11 +3,11 @@ using TheCSharpers_QuikTix.Models;
 
 public interface ITicketService
 {
-    IEnumerable<Ticket> GetTickets();
+    IEnumerable<Ticket> GetTickets(int movieId);
     Ticket GetTicketById(int id);
-    void AddTicket(Ticket ticket);
-    void UpdateTicket(int id, Ticket updatedTicket);
+    void AddTicket(int movieId, string ticketType, int quantity);
+    void UpdateTicket(int id, Ticket updatedTicket, Movie movie);
     void DeleteTicket(int id);
-    IEnumerable<Ticket> GetTicketsByMovieId(int movieId);  // Optional: to get all tickets for a specific movie
+    decimal GetTicketPrice(int id);
 
 }
