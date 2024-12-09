@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using TheCSharpers_QuikTix.Models;
+using Microsoft.AspNetCore.Cors;
 using System.Linq;
 
+[EnableCors("AllowAll")]
 [ApiController]
 [Route("api/[controller]")]
 public class CartController : ControllerBase

@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using TheCSharpers_QuikTix.Models;
+using Microsoft.AspNetCore.Cors;
 using TheCSharpers_QuikTix.Services;
 
 namespace TheCSharpers_QuikTix.Controllers
 {
+    [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     [ApiController]
     public class MoviesController : ControllerBase
