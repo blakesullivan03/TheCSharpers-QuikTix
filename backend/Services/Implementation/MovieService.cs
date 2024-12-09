@@ -19,7 +19,7 @@ public class MovieService : IMovieService
         return _context.Movies.ToList();
     }
 
-    public IEnumerable<Review> GetReviewsForMovie(int movieId)
+    /*public IEnumerable<Review> GetReviewsForMovie(int movieId)
     {
         var movie = _context.Movies.Find(movieId);
         if (movie == null)
@@ -27,7 +27,7 @@ public class MovieService : IMovieService
             throw new KeyNotFoundException($"Movie with id {movieId} not found.");
         }
         return movie.Reviews;
-    }
+    }*/
 
     public Movie GetMovieById(int id)
     {
@@ -45,7 +45,7 @@ public class MovieService : IMovieService
         _context.SaveChanges();
     }
 
-    public void AddReviewForMovie(int movieId, Review review)
+    /*public void AddReviewForMovie(int movieId, Review review)
     {
         var movie = _context.Movies.Find(movieId);
         if (movie == null)
@@ -54,7 +54,7 @@ public class MovieService : IMovieService
         }
         movie.Reviews.Add(review);
         _context.SaveChanges();
-    }
+    }*/
 
     public void UpdateMovie(int id, Movie updatedMovie)
     {

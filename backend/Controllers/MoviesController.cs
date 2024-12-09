@@ -62,7 +62,7 @@ namespace TheCSharpers_QuikTix.Controllers
         }
 
         //Add Review
-        [HttpPost]
+        /*([HttpPost]
         public IActionResult AddReview([FromBody] Review review)
         {
             if (review.Rating < 1 || review.Rating > 5)
@@ -72,6 +72,6 @@ namespace TheCSharpers_QuikTix.Controllers
             
             _movieService.AddReviewForMovie(review.MovieId, review);
             return Ok();
-        }
+        }*/
     }   
 }

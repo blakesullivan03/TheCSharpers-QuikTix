@@ -36,6 +36,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    Console.WriteLine("Swagger is Availabe at:");
+    Console.WriteLine("https://localhost:7267/swagger/index.html");
 }
 
 app.UseCors("AllowAll");
