@@ -19,9 +19,9 @@ namespace TheCSharpers_QuikTix.Controllers
 
         // GET: api/movies/get
         [HttpGet("get")]
-        public ActionResult<IEnumerable<Movie>> GetMovies([FromQuery] SortCriteria sortBy = SortCriteria.AtoZ)
+        public ActionResult<IEnumerable<Movie>> GetMovies()
         {
-            var movies = _movieService.GetMovies(sortBy);
+            var movies = _movieService.GetMovies();
             return Ok(movies);
         }
 
@@ -33,30 +33,6 @@ namespace TheCSharpers_QuikTix.Controllers
             {
                 var movie = _movieService.GetMovieById(id);
                 return Ok(movie);
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
-        }
-
-        // GET: api/movies/images
-        [HttpGet("images")]
-        public ActionResult<IEnumerable<string>> GetMovieImages()
-        {
-            var movies = _movieService.GetMovies().ToList();
-            var imagePaths = movies.Select(m => m.ImagePath).ToList();
-            return Ok(imagePaths);
-        }
-
-        // GET: api/movies/image/{id}
-        [HttpGet("image/{id}")]
-        public ActionResult<string> GetMovieImage(int id)
-        {
-            try
-            {
-                var movie = _movieService.GetMovieById(id);
-                return Ok(movie.ImagePath);
             }
             catch (KeyNotFoundException)
             {

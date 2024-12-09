@@ -39,8 +39,6 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<QuikTixDbContext>();
-    // Call the MovieSeeder method to seed the movies into the database
-    MovieSeeder.SeedMovies(context);
 }
 
 // Configure the HTTP request pipeline.

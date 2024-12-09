@@ -51,8 +51,9 @@ namespace TheCSharpers_QuikTix.Services.Implementation
                 showtime.AdultTicketCount = updatedShowtime.AdultTicketCount;
                 showtime.ChildTicketCount = updatedShowtime.ChildTicketCount;
 
-                _context.SaveChanges();
+                
             }
+            _context.SaveChanges();
             return showtime;
         }
 

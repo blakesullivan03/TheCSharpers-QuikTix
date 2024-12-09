@@ -26,17 +26,9 @@ public class QuikTixDbContext : DbContext
                     .IsRequired();  // Genre is required
                 entity.Property(m => m.Description)
                     .IsRequired();  // Description is required
-                entity.Property(m => m.ImagePath)
-                    .IsRequired();  // ImagePath is required
 
                 entity.Property(m => m.Rating)
                     .IsRequired(false);  // Rating is nullable (doesn't need additional configuration if nullable)
-
-                entity.Property(m => m.ReleaseDate)
-                    .HasColumnType("TEXT");  // Ensures correct date format for SQLite
-
-                entity.Property(m => m.TicketCount)
-                    .IsRequired();  // TicketCount is required
             });
 
             // Configure the Cart entity
