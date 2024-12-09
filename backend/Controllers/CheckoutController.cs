@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using TheCSharpers_QuikTix.Models;
 using TheCSharpers_QuikTix.Services.Interfaces;
+using Microsoft.AspNetCore.Cors;
 
+[EnableCors("AllowAll")]
 [ApiController]
 [Route("api/[controller]")]
 public class CheckoutController : ControllerBase
