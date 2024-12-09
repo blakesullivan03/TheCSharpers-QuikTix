@@ -6,8 +6,16 @@ function MovieListPage() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    getMovies().then(setMovies).catch((error) => console.error(error));
+    getMovies()
+      .then((movies) => {
+        console.log("Fetched movies:", movies);
+        setMovies(movies);
+      })
+      .catch((error) => {
+        console.error("Error fetching movies:", error);
+      });
   }, []);
+
 
   return (
     <div>
