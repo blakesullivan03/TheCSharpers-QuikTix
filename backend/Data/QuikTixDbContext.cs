@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.EntityFrameworkCore.Sqlite;
 using TheCSharpers_QuikTix.Models;
 
 public class QuikTixDbContext : DbContext

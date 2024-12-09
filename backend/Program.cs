@@ -11,7 +11,7 @@ builder.Services.AddSwaggerGen();
 
 // Add DbContext for Entity Framework Core
 builder.Services.AddDbContext<QuikTixDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add custom services (e.g., Movie, Cart, Review services)
 builder.Services.AddScoped<IMovieService, MovieService>();

@@ -5,11 +5,12 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5056/api", // Change this if your backend is on a different port
+  baseURL: "https://localhost:7267/api",
 });
 
 export const getMovies = async () => {
   const response = await api.get("/Movies/get");
+  console.log(response.data);
   return response.data;
 };
 
