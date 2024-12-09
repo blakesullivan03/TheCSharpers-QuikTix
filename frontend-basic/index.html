@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuikTix Movie App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Carousel Section -->
+  <div class="carousel-container">
+    <div class="carousel" id="carousel">
+      <!-- Dynamic carousel items will be injected here -->
+    </div>
+  </div>
+
+  <!-- Sorting Dropdown Section -->
+  <div class="sorting-container">
+    <label for="sort-by">Sort Movies By:</label>
+    <select id="sort-by" class="sort-dropdown">
+      <option value="AtoZ">Alphabetical A to Z</option>
+      <option value="ZtoA">Alphabetical Z to A</option>
+      <option value="ReleaseDateAsc">Release Date (Ascending)</option>
+      <option value="ReleaseDateDesc">Release Date (Descending)</option>
+      <option value="DurationAsc">Duration (Ascending)</option>
+      <option value="DurationDesc">Duration (Descending)</option>
+      <option value="BestRated">Best Rated</option>
+      <option value="Popular">Most Popular</option>
+    </select>
+  </div>
+
+  <!-- Movie List Section -->
+  <div class="movie-list" id="movie-list">
+    <!-- Dynamic movie details will be injected here -->
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
