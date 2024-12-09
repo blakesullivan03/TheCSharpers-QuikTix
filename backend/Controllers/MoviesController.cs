@@ -63,5 +63,49 @@ namespace TheCSharpers_QuikTix.Controllers
                 return NotFound();
             }
         }
+
+        // POST: api/movies/add
+        [HttpPost("add")]
+        public IActionResult AddMovie([FromBody] Movie movie)
+        {
+            movie.Id = 0; // Ensure ID is not set explicitly
+            _movieService.AddMovie(movie);
+            return CreatedAtAction(nameof(GetMovies), new { id = movie.Id }, movie);
+        }
+
+        // PUT: api/movies/{id}
+        [HttpPut("{id}")]
+        public IActionResult UpdateMovie(int id, Movie updatedMovie)
+        {
+            _movieService.UpdateMovie(id, updatedMovie);
+            return NoContent();
+        }
+
+        // DELETE: api/movies/{id}
+        [HttpDelete("{id}")]
+        public IActionResult DeleteMovie(int id)
+        {
+            var movie = _movieService.GetMovieById(id);
+            if (movie == null)
+            {
+                return NotFound("Movie not found.");
+            }
+
+            _movieService.DeleteMovie(id);
+            return NoContent();
+        }
+
+        // POST: api/movies/review
+        // [HttpPost("review")]
+        // public IActionResult AddReview([FromBody] Review review)
+        // {
+        //     if (review.Rating < 1 || review.Rating > 5)
+        //     {
+        //         return BadRequest("Rating should be between 1 and 5.");
+        //     }
+
+        //     _movieService.AddReviewForMovie(review.MovieId, review);
+        //     return Ok();
+        // }
     }
 }

@@ -35,6 +35,7 @@ public class CartController : ControllerBase
         }
     }
 
+
     [HttpPost("add")]
     public IActionResult AddToCart([FromBody] Cart item)
     {
@@ -50,7 +51,7 @@ public class CartController : ControllerBase
         }
         catch (ArgumentException ex)
         {
-            return BadRequest(ex.Message);
+                return BadRequest(ex.Message);
         }
     }
 
@@ -62,15 +63,8 @@ public class CartController : ControllerBase
             return BadRequest("Invalid movieId or ticketType.");
         }
 
-        try
-        {
-            _cartService.RemoveFromCart(movieId, ticketType);
-            return Ok("Item removed from cart.");
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound("Cart item not found.");
-        }
+        _cartService.RemoveFromCart(movieId, ticketType);
+        return Ok("Item removed from cart.");
     }
 
     [HttpPost("clear")]
