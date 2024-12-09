@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TheCSharpers_QuikTix.Services;
-using TheCSharpers_QuikTix.Data;
-using Microsoft.AspNetCore.Cors;
+using TheCSharpers_QuikTix.Services.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +15,11 @@ builder.Services.AddDbContext<QuikTixDbContext>(options =>
 
 // Add custom services (e.g., Movie, Cart, Review services)
 builder.Services.AddScoped<IMovieService, MovieService>();
-builder.Logging.AddConsole();
-builder.Logging.AddDebug();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<IShowtimeService, ShowtimeService>();
+//builder.Services.AddScoped<ITicketService, TicketService>();
+//builder.Services.AddScoped<IReviewService, ReviewService>();
 
 // Add CORS service
 builder.Services.AddCors(options =>
@@ -37,8 +39,6 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<QuikTixDbContext>();
-    // Call the MovieSeeder method to seed the movies into the database
-    MovieSeeder.SeedMovies(context);
 }
 
 // Configure the HTTP request pipeline.
@@ -46,6 +46,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    Console.WriteLine("Swagger UI is available at https://localhost:7267/swagger/index.html");
 }
 
 app.UseHttpsRedirection();

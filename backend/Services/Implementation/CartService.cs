@@ -1,91 +1,78 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using TheCSharpers_QuikTix.Models;
-using TheCSharpers_QuikTix.Data;
+using Microsoft.EntityFrameworkCore;
 
-public class CartService : ICartService
+namespace TheCSharpers_QuikTix.Services
 {
-    private readonly QuikTixDbContext _context;
-
-    public CartService(QuikTixDbContext context)
+    public class CartService : ICartService
     {
-        _context = context;
-    }
+        private readonly QuikTixDbContext _context;
 
-    public IEnumerable<Cart> GetCartItems()
-    {
-        return _context.Carts.ToList();  // Retrieve all cart items
-    }
-
-    public Cart GetCartItem(int movieId, string ticketType)
-    {
-        var item = _context.Carts.FirstOrDefault(c => c.MovieId == movieId && c.TicketType == ticketType);
-        if (item == null)
+        public CartService(QuikTixDbContext context)
         {
-            throw new KeyNotFoundException($"Cart item with MovieId {movieId} and TicketType {ticketType} not found.");
+            _context = context;
         }
-        return item;
-    }
 
-    public void AddToCart(Cart item)
-    {
-        if (item.Quantity <= 0) throw new ArgumentException("Quantity must be positive.");
-
-        var existingItem = _context.Carts.FirstOrDefault(
-            c => c.MovieId == item.MovieId && c.TicketType == item.TicketType
-        );
-
-        if (existingItem != null)
+        // Create a new cart for a user or movie
+        public Cart CreateCart(int movieId, string movieTitle, string ticketType, int quantity, decimal price)
         {
-            existingItem.Quantity += item.Quantity;  // Update the quantity of existing item
-            _context.SaveChanges();  // Persist the change
-        }
-        else
-        {
-            _context.Carts.Add(item);  // Add new cart item
+            var cart = new Cart
+            {
+                MovieId = movieId,
+                MovieTitle = movieTitle,
+                TicketType = ticketType,
+                Quantity = quantity,
+                Price = price
+            };
+
+            _context.Carts.Add(cart);
             _context.SaveChanges();
+            return cart;
         }
-    }
 
-    public void UpdateCartItem(int movieId, string ticketType, Cart updatedItem)
-    {
-        var item = _context.Carts.FirstOrDefault(c => c.MovieId == movieId && c.TicketType == ticketType);
-        if (item != null)
+        // Add a ticket to an existing cart
+        public void AddTicketToCart(int cartId, Ticket ticket)
         {
-            item.Quantity = updatedItem.Quantity;
-            item.Price = updatedItem.Price;
-            _context.SaveChanges();  // Persist the update
+            var cart = _context.Carts.Include(c => c.Tickets).FirstOrDefault(c => c.CartId == cartId);
+            if (cart != null)
+            {
+                cart.Tickets.Add(ticket);
+                _context.SaveChanges();
+            }
         }
-        else
-        {
-            throw new KeyNotFoundException($"Cart item with MovieId {movieId} and TicketType {ticketType} not found.");
-        }
-    }
 
-    public void RemoveFromCart(int movieId, string ticketType)
-    {
-        var item = _context.Carts.FirstOrDefault(c => c.MovieId == movieId && c.TicketType == ticketType);
-        if (item != null)
+        // Get the cart by ID
+        public Cart GetCart(int cartId)
         {
-            _context.Carts.Remove(item);  // Remove the cart item
-            _context.SaveChanges();  // Persist the removal
+            var cart = _context.Carts.Include(c => c.Tickets)
+                                      .FirstOrDefault(c => c.CartId == cartId);
+            if (cart == null)
+            {
+                throw new InvalidOperationException($"Cart with ID {cartId} not found.");
+            }
+            return cart;
         }
-        else
+
+        // Update the quantity of tickets in the cart
+        public void UpdateCart(int cartId, int newQuantity, decimal newPrice)
         {
-            throw new KeyNotFoundException($"Cart item with MovieId {movieId} and TicketType {ticketType} not found.");
+            var cart = _context.Carts.FirstOrDefault(c => c.CartId == cartId);
+            if (cart != null)
+            {
+                cart.Quantity = newQuantity;
+                cart.Price = newPrice;
+                _context.SaveChanges();
+            }
         }
-    }
 
-    public void ClearCart()
-    {
-        var items = _context.Carts.ToList();  // Retrieve all cart items
-        _context.Carts.RemoveRange(items);  // Remove all items
-        _context.SaveChanges();  // Persist the changes
-    }
-
-    public decimal CalculateTotal()
-    {
-        return _context.Carts.Sum(item => item.Price * item.Quantity);  // Calculate total price of items in the cart
+        // Delete the cart
+        public void DeleteCart(int cartId)
+        {
+            var cart = _context.Carts.Include(c => c.Tickets).FirstOrDefault(c => c.CartId == cartId);
+            if (cart != null)
+            {
+                _context.Carts.Remove(cart);
+                _context.SaveChanges();
+            }
+        }
     }
 }

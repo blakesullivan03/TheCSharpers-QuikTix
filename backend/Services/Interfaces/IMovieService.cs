@@ -1,25 +1,17 @@
 using System.Collections.Generic;
 using TheCSharpers_QuikTix.Models;
 
-namespace TheCSharpers_QuikTix.Services
+public interface IMovieService
 {
-    public interface IMovieService
-    {
-        // Get all movies
-        IEnumerable<Movie> GetMovies();
+    IEnumerable<Movie> GetMovies();
+    //IEnumerable<Review> GetReviewsForMovie(int movieId);
+    Movie GetMovieById(int id);
+    void AddMovie(Movie movie);
+    void UpdateMovie(int id, Movie updatedMovie);
+    void DeleteMovie(int id);
+    //void AddReviewForMovie(int movieId, Review review);
+    //void AddShowtimeForMovie(int movieId, Showtime showtime);
 
-        IEnumerable<Movie> GetMovies(SortCriteria sortBy);
+    //IEnumerable<Showtime> GetShowtimesForMovie(int movieId);
 
-        // Get a movie by its ID
-        Movie GetMovieById(int id);
-
-        // Add a new movie
-        void AddMovie(Movie movie);
-
-        // Update an existing movie
-        void UpdateMovie(int id, Movie updatedMovie);
-
-        // Delete a movie by its ID
-        void DeleteMovie(int id);
-    }
 }

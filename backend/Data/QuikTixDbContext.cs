@@ -1,17 +1,15 @@
-using Microsoft.EntityFrameworkCore;  // For EF Core
-using Microsoft.EntityFrameworkCore.Sqlite;  // For SQLite support
-using TheCSharpers_QuikTix.Models;  // For Movie, Cart, and Ticket models
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Sqlite;
+using TheCSharpers_QuikTix.Models;
 
-namespace TheCSharpers_QuikTix.Data {
-    public class QuikTixDbContext : DbContext
-    {
-        // Define the DbSet for your entities
-        public DbSet<Movie> Movies { get; set; } = null!;
-        public DbSet<Cart> Carts { get; set; } = null!;
-        public DbSet<Ticket> Tickets { get; set; } = null!;
-
-        // Constructor for injecting options into the DbContext
-        public QuikTixDbContext(DbContextOptions<QuikTixDbContext> options) : base(options) { }
+public class QuikTixDbContext : DbContext
+{
+    public DbSet<Movie> Movies { get; set; } = null!;
+    public DbSet<Showtime> Showtimes { get; set; } = null!;
+    public DbSet<Cart> Carts { get; set; } = null!;
+    
+    public DbSet<Ticket> Tickets {get; set; } = null!;
+    public QuikTixDbContext(DbContextOptions<QuikTixDbContext> options) : base(options) { }
 
         // Configure model-specific settings like keys, indexes, relationships, etc.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,17 +26,9 @@ namespace TheCSharpers_QuikTix.Data {
                     .IsRequired();  // Genre is required
                 entity.Property(m => m.Description)
                     .IsRequired();  // Description is required
-                entity.Property(m => m.ImagePath)
-                    .IsRequired();  // ImagePath is required
 
                 entity.Property(m => m.Rating)
                     .IsRequired(false);  // Rating is nullable (doesn't need additional configuration if nullable)
-
-                entity.Property(m => m.ReleaseDate)
-                    .HasColumnType("TEXT");  // Ensures correct date format for SQLite
-
-                entity.Property(m => m.TicketCount)
-                    .IsRequired();  // TicketCount is required
             });
 
             // Configure the Cart entity
@@ -49,13 +39,20 @@ namespace TheCSharpers_QuikTix.Data {
                     .HasColumnType("decimal(18,2)");  // Define price precision and scale
             });
 
-            // Configure the Ticket entity
-            modelBuilder.Entity<Ticket>(entity =>
-            {
-                entity.HasKey(t => t.Id);  // Setting Id as the primary key
-                entity.Property(t => t.Price)
-                    .HasColumnType("decimal(18,2)");  // Define price precision and scale
-            });
-        }
+        modelBuilder.Entity<Ticket>(entity =>
+        {
+            entity.HasKey(t => t.Id);
+            entity.Property(t => t.Price).HasColumnType("decimal(18,2)");
+        });
+
+        modelBuilder.Entity<Showtime>(entity =>
+        {
+            entity.HasKey(s => s.Id);
+            entity.Property(s => s.MovieId).IsRequired();
+            entity.Property(s => s.StartTime).IsRequired();
+            entity.Property(s => s.AdultTicketCount).IsRequired();
+            entity.Property(s => s.ChildTicketCount).IsRequired();
+        });
+
     }
 }

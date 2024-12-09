@@ -19,9 +19,9 @@ namespace TheCSharpers_QuikTix.Controllers
 
         // GET: api/movies/get
         [HttpGet("get")]
-        public ActionResult<IEnumerable<Movie>> GetMovies([FromQuery] SortCriteria sortBy = SortCriteria.AtoZ)
+        public ActionResult<IEnumerable<Movie>> GetMovies()
         {
-            var movies = _movieService.GetMovies(sortBy);
+            var movies = _movieService.GetMovies();
             return Ok(movies);
         }
 
@@ -40,35 +40,11 @@ namespace TheCSharpers_QuikTix.Controllers
             }
         }
 
-        // GET: api/movies/images
-        [HttpGet("images")]
-        public ActionResult<IEnumerable<string>> GetMovieImages()
-        {
-            var movies = _movieService.GetMovies().ToList();
-            var imagePaths = movies.Select(m => m.ImagePath).ToList();
-            return Ok(imagePaths);
-        }
-
-        // GET: api/movies/image/{id}
-        [HttpGet("image/{id}")]
-        public ActionResult<string> GetMovieImage(int id)
-        {
-            try
-            {
-                var movie = _movieService.GetMovieById(id);
-                return Ok(movie.ImagePath);
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
-        }
-
         // POST: api/movies/add
         [HttpPost("add")]
         public IActionResult AddMovie([FromBody] Movie movie)
         {
-            movie.Id = 0; // Ensure ID is not set explicitly
+            movie.Id = 0; // Ensure the Movie Id is Not Set
             _movieService.AddMovie(movie);
             return CreatedAtAction(nameof(GetMovies), new { id = movie.Id }, movie);
         }
@@ -95,17 +71,5 @@ namespace TheCSharpers_QuikTix.Controllers
             return NoContent();
         }
 
-        // POST: api/movies/review
-        // [HttpPost("review")]
-        // public IActionResult AddReview([FromBody] Review review)
-        // {
-        //     if (review.Rating < 1 || review.Rating > 5)
-        //     {
-        //         return BadRequest("Rating should be between 1 and 5.");
-        //     }
-
-        //     _movieService.AddReviewForMovie(review.MovieId, review);
-        //     return Ok();
-        // }
-    }
+    }   
 }

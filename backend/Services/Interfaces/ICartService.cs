@@ -1,13 +1,12 @@
 using TheCSharpers_QuikTix.Models;
-using System.Collections.Generic;
-
-public interface ICartService
+namespace TheCSharpers_QuikTix.Services
 {
-    void AddToCart(Cart item);  // Adds a cart item
-    IEnumerable<Cart> GetCartItems();  // Returns a list of all cart items
-    Cart GetCartItem(int movieId, string ticketType);  // Fetch a specific cart item
-    void UpdateCartItem(int movieId, string ticketType, Cart updatedItem);  // Update a specific cart item
-    void RemoveFromCart(int movieId, string ticketType);  // Removes a cart item
-    void ClearCart();  // Clears the cart
-    decimal CalculateTotal();  // Calculates total price of all items in the cart
+    public interface ICartService
+    {
+        Cart CreateCart(int movieId, string movieTitle, string ticketType, int quantity, decimal price);
+        void AddTicketToCart(int cartId, Ticket ticket);
+        Cart GetCart(int cartId);
+        void UpdateCart(int cartId, int newQuantity, decimal newPrice);
+        void DeleteCart(int cartId);
+    }
 }
