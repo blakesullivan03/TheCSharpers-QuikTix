@@ -46,6 +46,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    Console.WriteLine("Swagger UI is available at https://localhost:7267/swagger/index.html");
 }
 
 app.UseHttpsRedirection();

@@ -43,8 +43,13 @@ namespace TheCSharpers_QuikTix.Services
         // Get the cart by ID
         public Cart GetCart(int cartId)
         {
-            return _context.Carts.Include(c => c.Tickets)
-                                 .FirstOrDefault(c => c.CartId == cartId);
+            var cart = _context.Carts.Include(c => c.Tickets)
+                                      .FirstOrDefault(c => c.CartId == cartId);
+            if (cart == null)
+            {
+                throw new InvalidOperationException($"Cart with ID {cartId} not found.");
+            }
+            return cart;
         }
 
         // Update the quantity of tickets in the cart
