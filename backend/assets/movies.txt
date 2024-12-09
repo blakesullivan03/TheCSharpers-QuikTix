@@ -1,0 +1,20 @@
+1|All Quiet On the Western Front|War|A modern retake on a classic|3|50
+2|The Matrix|Sci-Fi|A hacker discovers the truth of his reality|5|75
+3|The Shawshank Redemption|Drama|A banker fights for hope and redemption|7|20
+4|Inception|Thriller|A heist within dreams|4|63
+5|Interstellar|Sci-Fi|A journey beyond the stars to save humanity|6|45
+6|Parasite|Thriller|A dark comedy about class and family dynamics|2|89
+7|The Godfather|Crime|The story of a powerful crime family|6|10
+8|Forrest Gump|Drama|The life journey of a simple, kind-hearted man|4|30
+9|Jurassic Park|Adventure|Dinosaurs roam in a modern-day theme park|5|95
+10|The Lion King|Animation|A young lion's journey to reclaim his kingdom|7|52
+11|Gladiator|Action|A general becomes a gladiator to avenge his family|3|12
+12|Black Panther|Superhero|A prince returns to his kingdom as king|6|80
+13|La La Land|Musical|Two artists struggle with dreams and romance|2|42
+14|Titanic|Romance|A love story on a fateful ship|5|90
+15|Casablanca|Romance|A classic love story set in wartime Morocco|1|25
+16|Schindler's List|Historical|The story of one man's effort to save lives|7|5
+17|Braveheart|Historical|A Scottish warrior fights for freedom|4|68
+18|Mad Max: Fury Road|Action|A thrilling, post-apocalyptic chase|5|58
+19|The Silence of the Lambs|Thriller|A young FBI agent seeks help to catch a killer|3|47
+20|Toy Story|Animation|Toys come to life when humans aren't around|6|77

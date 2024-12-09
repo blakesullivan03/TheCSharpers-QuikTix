@@ -18,7 +18,6 @@ body {
   .carousel {
     display: flex;
     transition: transform 1s ease;
-    color: #f4f4f4;
   }
   
   .carousel-item {

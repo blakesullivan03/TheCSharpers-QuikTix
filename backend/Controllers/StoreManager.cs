@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using TheCSharpers_QuikTix.Models;
 using TheCSharpers_QuikTix.Services;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Cors;
 
 namespace TheCSharpers_QuikTix.Controllers
 {
+    [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     [ApiController]
     public class StoreManager : ControllerBase

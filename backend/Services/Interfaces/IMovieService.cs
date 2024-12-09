@@ -15,5 +15,3 @@ public interface IMovieService
     //IEnumerable<Showtime> GetShowtimesForMovie(int movieId);
 
 }
-
-

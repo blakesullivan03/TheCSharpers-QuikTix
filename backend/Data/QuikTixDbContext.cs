@@ -11,21 +11,41 @@ public class QuikTixDbContext : DbContext
     public DbSet<Ticket> Tickets {get; set; } = null!;
     public QuikTixDbContext(DbContextOptions<QuikTixDbContext> options) : base(options) { }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.Entity<Movie>(entity =>
+        // Configure model-specific settings like keys, indexes, relationships, etc.
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            entity.HasKey(m => m.Id);
-            entity.Property(m => m.Title).IsRequired();
-        });
+            base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Cart>(entity =>
-        {
-            entity.HasKey(c => c.CartId);
-            entity.Property(c => c.Price).HasColumnType("decimal(18,2)");
-        });
+            // Configure the Movie entity
+            modelBuilder.Entity<Movie>(entity =>
+            {
+                entity.HasKey(m => m.Id);  // Setting Id as the primary key
+                entity.Property(m => m.Title)
+                    .IsRequired();  // Title is required
+                entity.Property(m => m.Genre)
+                    .IsRequired();  // Genre is required
+                entity.Property(m => m.Description)
+                    .IsRequired();  // Description is required
+                entity.Property(m => m.ImagePath)
+                    .IsRequired();  // ImagePath is required
+
+                entity.Property(m => m.Rating)
+                    .IsRequired(false);  // Rating is nullable (doesn't need additional configuration if nullable)
+
+                entity.Property(m => m.ReleaseDate)
+                    .HasColumnType("TEXT");  // Ensures correct date format for SQLite
+
+                entity.Property(m => m.TicketCount)
+                    .IsRequired();  // TicketCount is required
+            });
+
+            // Configure the Cart entity
+            modelBuilder.Entity<Cart>(entity =>
+            {
+                entity.HasKey(c => c.CartId);  // Setting CartId as the primary key
+                entity.Property(c => c.Price)
+                    .HasColumnType("decimal(18,2)");  // Define price precision and scale
+            });
 
         modelBuilder.Entity<Ticket>(entity =>
         {

@@ -5,7 +5,6 @@ using TheCSharpers_QuikTix.Services.Implementation;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -22,30 +21,40 @@ builder.Services.AddScoped<IShowtimeService, ShowtimeService>();
 //builder.Services.AddScoped<ITicketService, TicketService>();
 //builder.Services.AddScoped<IReviewService, ReviewService>();
 
-// Use CORDS to allow the Frontend to Make Requests
+// Add CORS service
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
-        builder.AllowAnyOrigin() // You can specify the allowed origins if you want to restrict this to a specific domain.
-               .AllowAnyMethod()
-               .AllowAnyHeader());
+    options.AddPolicy("AllowAll",
+        policy =>
+        {
+            policy.AllowAnyOrigin()  // Allow requests from any origin
+                .AllowAnyMethod()    // Allow any HTTP method (GET, POST, etc.)
+                .AllowAnyHeader();   // Allow any headers
+        });
 });
 
-
 var app = builder.Build();
+
+// Ensure the database is created and seed the data
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<QuikTixDbContext>();
+    // Call the MovieSeeder method to seed the movies into the database
+    MovieSeeder.SeedMovies(context);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    Console.WriteLine("Swagger is Availabe at:");
-    Console.WriteLine("https://localhost:7267/swagger/index.html");
 }
 
+app.UseHttpsRedirection();
+
+// Enable CORS with the "AllowAll" policy
 app.UseCors("AllowAll");
 
-app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers(); // Map controller endpoints (e.g., MoviesController, CartController, etc.)

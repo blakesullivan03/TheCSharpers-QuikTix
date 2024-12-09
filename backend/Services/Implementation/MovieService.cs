@@ -1,44 +1,63 @@
-// Service that Handles adding, deleting, and updating Movies
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Microsoft.EntityFrameworkCore;
 using TheCSharpers_QuikTix.Models;
+using TheCSharpers_QuikTix.Data;
+using TheCSharpers_QuikTix.Services;
 
-public class MovieService : IMovieService
+namespace TheCSharpers_QuikTix.Services
 {
-    private readonly QuikTixDbContext _context;
-
-    public MovieService(QuikTixDbContext context)
+    public class MovieService : IMovieService
     {
-        _context = context;
-    }
+        private readonly QuikTixDbContext _context;
+
+        public MovieService(QuikTixDbContext context)
+        {
+            _context = context;
+        }
 
     public IEnumerable<Movie> GetMovies()
     {
         return _context.Movies.Include(m => m.Showtimes).ToList();
     }
 
-    /*public IEnumerable<Review> GetReviewsForMovie(int movieId)
-    {
-        var movie = _context.Movies.Find(movieId);
-        if (movie == null)
+        public IEnumerable<Movie> GetMovies(SortCriteria sortBy)
         {
-            throw new KeyNotFoundException($"Movie with id {movieId} not found.");
+            switch (sortBy)
+            {
+                case SortCriteria.AtoZ:
+                    return _context.Movies.OrderBy(m => m.Title);
+                case SortCriteria.ZtoA:
+                    return _context.Movies.OrderByDescending(m => m.Title);
+                case SortCriteria.ReleaseDateAsc:
+                    return _context.Movies.OrderBy(m => m.ReleaseDate);
+                case SortCriteria.ReleaseDateDesc:
+                    return _context.Movies.OrderByDescending(m => m.ReleaseDate);
+                case SortCriteria.DurationAsc:
+                    return _context.Movies.OrderBy(m => m.Duration);
+                case SortCriteria.DurationDesc:
+                    return _context.Movies.OrderByDescending(m => m.Duration);
+                case SortCriteria.BestRated:
+                    return _context.Movies.OrderByDescending(m => m.Rating);
+                case SortCriteria.Popular:
+                    return _context.Movies.OrderBy(m => m.TicketCount);
+                default:
+                    return _context.Movies;  // Default to no sorting
+            }
         }
-        return movie.Reviews;
-    }*/
 
-    public Movie GetMovieById(int id)
-    {
-        var movie = _context.Movies.FirstOrDefault(m => m.Id == id);
-        if (movie == null)
+        // Get a movie by its ID
+        public Movie GetMovieById(int id)
         {
-            throw new KeyNotFoundException($"Movie with id {id} not found.");
+            var movie = _context.Movies.FirstOrDefault(m => m.Id == id);
+            if (movie == null)
+            {
+                throw new KeyNotFoundException($"Movie with id {id} not found.");
+            }
+            return movie;
         }
-        return movie;
-    }
 
     public void AddMovie(Movie movie)
     {
@@ -54,15 +73,19 @@ public class MovieService : IMovieService
             movie.Title = updatedMovie.Title;
             movie.Genre = updatedMovie.Genre;
             movie.Description = updatedMovie.Description;
+
             _context.SaveChanges();
         }
-    }
 
-    public void DeleteMovie(int id)
-    {
-        var movie = _context.Movies.Find(id);
-        if (movie != null)
+        // Delete a movie by its ID
+        public void DeleteMovie(int id)
         {
+            var movie = _context.Movies.Where(m => m.Id == id).FirstOrDefault();
+            if (movie == null)
+            {
+                throw new KeyNotFoundException($"Movie with id {id} not found.");
+            }
+
             _context.Movies.Remove(movie);
             _context.SaveChanges();
         }
