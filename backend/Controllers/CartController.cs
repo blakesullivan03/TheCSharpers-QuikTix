@@ -74,6 +74,20 @@ namespace QuikTix.Controllers
             _context.SaveChanges();
             return Ok(new { message = "Cart cleared." });
         }
+
+        [HttpDelete("remove/{cartId}")]
+        public IActionResult RemoveFromCart(int cartId)
+        {
+            var cartItem = _context.Carts.Find(cartId);
+            if (cartItem == null)
+            {
+                return NotFound();
+            }
+
+            _context.Carts.Remove(cartItem);
+            _context.SaveChanges();
+            return Ok(new { message = "Item removed from cart." });
+        }
     }
     
 

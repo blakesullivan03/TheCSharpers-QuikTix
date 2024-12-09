@@ -41,6 +41,7 @@ function CartPage() {
         {cart.map((ticket) => (
           <li key={ticket.cartId}>
             <div>
+              {console.log(ticket)}
               <h3>Movie: {ticket.movieId}</h3>
               <p>Ticket Type: {ticket.ticketType}</p>
               <p>Quantity: {ticket.quantity}</p>

@@ -1,5 +1,6 @@
 // src/components/Checkout.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 /* Simulating cart data
 const cartData = {
@@ -16,6 +17,7 @@ const PaymentPage = () => {
   const [cvv, setCvv] = useState('');
   const [paymentResult, setPaymentResult] = useState('');
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   //const totalAmount = cartData.tickets.reduce((acc, ticket) => acc + ticket.quantity * ticket.price, 0);
   //const totalWithTaxes = totalAmount * 0.07 + totalAmount;
@@ -122,7 +124,7 @@ return (
 
         {paymentResult && <div className="payment-result">{paymentResult}</div>}
 
-        <button id="exitBtn" onClick={() => alert('Redirecting to ticket purchase...')}>Exit</button>
+        <button id="exitBtn" onClick={() => navigate("/")}>Exit</button>
     </div>
 );
 };

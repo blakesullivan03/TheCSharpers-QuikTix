@@ -45,27 +45,6 @@ namespace TheCSharpers_QuikTix.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Review",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Author = table.Column<string>(type: "TEXT", nullable: true),
-                    UserReview = table.Column<string>(type: "TEXT", nullable: true),
-                    Rating = table.Column<int>(type: "INTEGER", nullable: false),
-                    MovieId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Review", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Review_Movies_MovieId",
-                        column: x => x.MovieId,
-                        principalTable: "Movies",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Showtimes",
                 columns: table => new
                 {
@@ -73,6 +52,7 @@ namespace TheCSharpers_QuikTix.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     StartTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     MovieId = table.Column<int>(type: "INTEGER", nullable: false),
+                    MovieTitle = table.Column<string>(type: "TEXT", nullable: false),
                     AdultTicketCount = table.Column<int>(type: "INTEGER", nullable: false),
                     ChildTicketCount = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -97,7 +77,8 @@ namespace TheCSharpers_QuikTix.Migrations
                     TicketType = table.Column<string>(type: "TEXT", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     PurchaseTime = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CartId = table.Column<int>(type: "INTEGER", nullable: true)
+                    CartId = table.Column<int>(type: "INTEGER", nullable: false),
+                    MovieId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -106,7 +87,14 @@ namespace TheCSharpers_QuikTix.Migrations
                         name: "FK_Tickets_Carts_CartId",
                         column: x => x.CartId,
                         principalTable: "Carts",
-                        principalColumn: "CartId");
+                        principalColumn: "CartId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tickets_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Tickets_Showtimes_ShowtimeId",
                         column: x => x.ShowtimeId,
@@ -114,11 +102,6 @@ namespace TheCSharpers_QuikTix.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Review_MovieId",
-                table: "Review",
-                column: "MovieId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Showtimes_MovieId",
@@ -131,6 +114,11 @@ namespace TheCSharpers_QuikTix.Migrations
                 column: "CartId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Tickets_MovieId",
+                table: "Tickets",
+                column: "MovieId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tickets_ShowtimeId",
                 table: "Tickets",
                 column: "ShowtimeId");
@@ -139,9 +127,6 @@ namespace TheCSharpers_QuikTix.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Review");
-
             migrationBuilder.DropTable(
                 name: "Tickets");
 

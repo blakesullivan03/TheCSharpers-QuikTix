@@ -26,7 +26,6 @@ public class QuikTixDbContext : DbContext
                     .IsRequired();  // Genre is required
                 entity.Property(m => m.Description)
                     .IsRequired();  // Description is required
-
                 entity.Property(m => m.Rating)
                     .IsRequired(false);  // Rating is nullable (doesn't need additional configuration if nullable)
             });
@@ -49,6 +48,7 @@ public class QuikTixDbContext : DbContext
         {
             entity.HasKey(s => s.Id);
             entity.Property(s => s.MovieId).IsRequired();
+            entity.Property(s => s.MovieTitle).IsRequired();
             entity.Property(s => s.StartTime).IsRequired();
             entity.Property(s => s.AdultTicketCount).IsRequired();
             entity.Property(s => s.ChildTicketCount).IsRequired();

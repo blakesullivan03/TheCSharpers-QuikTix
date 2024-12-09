@@ -44,6 +44,7 @@ const Showtime = ({ showtime, movieId }) => {
                     onChange={e => setAdultTickets(Number(e.target.value))}
                     max={showtime.adultTicketCount}
                 />
+                {console.log(showtime.adultTicketCount)}
             </div>
             <div>
                 <label>Child Tickets: </label>
