@@ -22,11 +22,13 @@ public class QuikTixDbContext : DbContext
         modelBuilder.Entity<Cart>(entity =>
         {
             entity.HasKey(c => c.CartId);
+            entity.Property(c => c.Price).HasColumnType("decimal(18,2)");
         });
 
         modelBuilder.Entity<Ticket>(entity =>
         {
             entity.HasKey(t => t.Id);
+            entity.Property(t => t.Price).HasColumnType("decimal(18,2)");
         });
 
     }
