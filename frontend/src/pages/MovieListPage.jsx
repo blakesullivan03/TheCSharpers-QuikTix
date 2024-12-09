@@ -8,11 +8,11 @@ function MovieListPage() {
   useEffect(() => {
     getMovies()
       .then((movies) => {
-        console.log("Fetched movies:", movies);
+        //console.log("Fetched movies:", movies);
         setMovies(movies);
       })
       .catch((error) => {
-        console.error("Error fetching movies:", error);
+        //console.error("Error fetching movies:", error);
       });
   }, []);
 
@@ -23,7 +23,12 @@ function MovieListPage() {
       <ul>
         {movies.map((movie) => (
           <li key={movie.id}>
-            <Link to={`/Movies/${movie.id}`}>{movie.title}</Link>
+            <Link to={`/Movies/${movie.id}`}>
+            <div>
+              <h2>{movie.title}</h2>
+              <p>{movie.description}</p>
+            </div>
+            </Link>
           </li>
         ))}
       </ul>

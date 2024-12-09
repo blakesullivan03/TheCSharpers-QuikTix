@@ -36,7 +36,7 @@ namespace TheCSharpers_QuikTix.Controllers
         [HttpPost("add")]
         public IActionResult AddMovie([FromBody] Movie movie)
         {
-            movie.Id = 0; //Make Sure ID is not Set Explicitly
+            movie.Id = 0; // Ensure the Movie Id is Not Set
             _movieService.AddMovie(movie);
             return CreatedAtAction(nameof(GetAllMovies), new { id = movie.Id }, movie);
         }
@@ -61,17 +61,5 @@ namespace TheCSharpers_QuikTix.Controllers
             return NoContent();
         }
 
-        //Add Review
-        /*([HttpPost]
-        public IActionResult AddReview([FromBody] Review review)
-        {
-            if (review.Rating < 1 || review.Rating > 5)
-            {
-                return BadRequest("Rating should be between 1 and 5.");
-            }
-            
-            _movieService.AddReviewForMovie(review.MovieId, review);
-            return Ok();
-        }*/
     }   
 }

@@ -41,7 +41,7 @@ function CartPage() {
         {cart.map((ticket) => (
           <li key={ticket.cartId}>
             <div>
-              <h3>{ticket.movieTitle}</h3>
+              <h3>Movie: {ticket.movieId}</h3>
               <p>Ticket Type: {ticket.ticketType}</p>
               <p>Quantity: {ticket.quantity}</p>
               <p>Price per Ticket: ${ticket.price.toFixed(2)}</p>
@@ -54,7 +54,7 @@ function CartPage() {
         ))}
       </ul>
       <h3>Total Price: ${totalPrice.toFixed(2)}</h3>
-      <button onClick={() => navigate("/paymentpage")}>Proceed to Checkout</button>
+      <button onClick={() => navigate("/payment-page")}>Proceed to Checkout</button>
     </div>
   );
 }

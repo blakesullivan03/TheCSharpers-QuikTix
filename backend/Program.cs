@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TheCSharpers_QuikTix.Services;
+using TheCSharpers_QuikTix.Services.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,8 @@ builder.Services.AddDbContext<QuikTixDbContext>(options =>
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<IShowtimeService, ShowtimeService>();
+//builder.Services.AddScoped<ITicketService, TicketService>();
 //builder.Services.AddScoped<IReviewService, ReviewService>();
 
 // Use CORDS to allow the Frontend to Make Requests

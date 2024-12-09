@@ -4,7 +4,9 @@ import WelcomePage from "./pages/WelcomePage";
 import MovieListPage from "./pages/MovieListPage";
 import MovieDetailsPage from "./pages/MovieDetailsPage";
 import CartPage from "./pages/CartPage";
+import PaymentPage from "./pages/PaymentPage";
 import NavBar from "./components/NavBar";
+
 
 function App() {
   return (
@@ -15,6 +17,7 @@ function App() {
         <Route path="/movies" element={<MovieListPage />} />
         <Route path="/movies/:movieId" element={<MovieDetailsPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/payment-page" element={<PaymentPage />} />
       </Routes>
     </Router>
   );

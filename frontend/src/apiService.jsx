@@ -10,19 +10,30 @@ const api = axios.create({
 
 export const getMovies = async () => {
   const response = await api.get("/Movies/get");
-  console.log(response.data);
   return response.data;
 };
 
-export const addTicketToCart = async (movieId, quantity) => {
-  await api.post("/cart/add", { movieId, quantity });
+export const addTicketToCart = async (movieId, { showtimeId, adultTickets, childTickets }) => {
+  // Send a POST request to add tickets to the cart
+  const response = await api.post("/Cart/add-to-cart", {
+    movieId,
+    showtimeId,
+    adultTickets,
+    childTickets
+  }, 
+);
+  return response.data;
 };
 
 export const getCart = async () => {
-  const response = await api.get("/Cart/getcart");
+  const response = await api.get("/Cart/get-cart");
   return response.data;
 };
 
-export const removeTicketFromCart = async (ticketId) => {
-  await api.delete(`/cart/removeTicket/${ticketId}`);
-};
+export const removeTicketFromCart = async (cartId) => {
+  await api.delete(`/Cart/remove/${cartId}`);
+}
+
+export const clearCart = async () => {
+  await api.delete("/Cart/clear");
+}

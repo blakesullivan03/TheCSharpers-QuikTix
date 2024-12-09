@@ -10,6 +10,10 @@ public interface IMovieService
     void UpdateMovie(int id, Movie updatedMovie);
     void DeleteMovie(int id);
     //void AddReviewForMovie(int movieId, Review review);
+    //void AddShowtimeForMovie(int movieId, Showtime showtime);
+
+    //IEnumerable<Showtime> GetShowtimesForMovie(int movieId);
+
 }
 
 
