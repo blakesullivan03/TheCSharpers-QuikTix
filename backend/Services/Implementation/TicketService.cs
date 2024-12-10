@@ -63,8 +63,7 @@ namespace TheCSharpers_QuikTix.Services
         // Get ticket by ID
         public Ticket GetTicketById(int id)
         {
-            var ticket = _context.Tickets.Include(t => t.Movie)
-                                          .FirstOrDefault(t => t.Id == id);
+            var ticket = _context.Tickets.FirstOrDefault(t => t.Id == id);
             if (ticket == null)
             {
                 throw new Exception($"Ticket with ID {id} not found.");

@@ -17,7 +17,7 @@ public class MovieService : IMovieService
 
     public IEnumerable<Movie> GetMovies()
     {
-        return _context.Movies.Include(m => m.Showtimes).ToList();
+        return _context.Movies.ToList();
     }
 
     /*public IEnumerable<Review> GetReviewsForMovie(int movieId)
@@ -78,7 +78,7 @@ public class MovieService : IMovieService
             throw new KeyNotFoundException($"Movie with id {movieId} not found.");
         }
 
-        var showtime = movie.Showtimes.FirstOrDefault(s => s.Id == showtimeId);
+        var showtime = _context.Showtimes.FirstOrDefault(s => s.MovieId == movieId);
 
         if (showtime == null)
         {

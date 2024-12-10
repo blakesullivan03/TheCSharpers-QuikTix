@@ -8,8 +8,6 @@ namespace TheCSharpers_QuikTix.Models
         public string? Comment { get; set; }
         public int Rating { get; set; } // 1-5 scale
         public int MovieId { get; set; } // Foreign key
-        public Movie Movie { get; set; } = null!; // Navigation property
-
     }
 
 }

@@ -88,8 +88,6 @@ namespace TheCSharpers_QuikTix.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieId");
-
                     b.ToTable("Reviews");
                 });
 
@@ -112,8 +110,6 @@ namespace TheCSharpers_QuikTix.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
 
                     b.ToTable("Showtimes");
                 });
@@ -150,33 +146,9 @@ namespace TheCSharpers_QuikTix.Migrations
 
                     b.HasIndex("CartId");
 
-                    b.HasIndex("MovieId");
-
                     b.HasIndex("ShowtimeId");
 
                     b.ToTable("Tickets");
-                });
-
-            modelBuilder.Entity("TheCSharpers_QuikTix.Models.Review", b =>
-                {
-                    b.HasOne("TheCSharpers_QuikTix.Models.Movie", "Movie")
-                        .WithMany("Reviews")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-                });
-
-            modelBuilder.Entity("TheCSharpers_QuikTix.Models.Showtime", b =>
-                {
-                    b.HasOne("TheCSharpers_QuikTix.Models.Movie", "Movie")
-                        .WithMany("Showtimes")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("TheCSharpers_QuikTix.Models.Ticket", b =>
@@ -184,12 +156,6 @@ namespace TheCSharpers_QuikTix.Migrations
                     b.HasOne("TheCSharpers_QuikTix.Models.Cart", "Cart")
                         .WithMany("Tickets")
                         .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TheCSharpers_QuikTix.Models.Movie", "Movie")
-                        .WithMany("Tickets")
-                        .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -201,22 +167,11 @@ namespace TheCSharpers_QuikTix.Migrations
 
                     b.Navigation("Cart");
 
-                    b.Navigation("Movie");
-
                     b.Navigation("Showtime");
                 });
 
             modelBuilder.Entity("TheCSharpers_QuikTix.Models.Cart", b =>
                 {
-                    b.Navigation("Tickets");
-                });
-
-            modelBuilder.Entity("TheCSharpers_QuikTix.Models.Movie", b =>
-                {
-                    b.Navigation("Reviews");
-
-                    b.Navigation("Showtimes");
-
                     b.Navigation("Tickets");
                 });
 #pragma warning restore 612, 618

@@ -14,7 +14,6 @@ namespace TheCSharpers_QuikTix.Models
         public Cart? Cart { get; set; }
 
         public int MovieId { get; set; }
-        public Movie? Movie { get; set; }
 
         public Boolean IsAvailable { get; set; }
     }

@@ -41,7 +41,6 @@ namespace TheCSharpers_QuikTix.Services.Implementation
         existingReview.Comment = review.Comment;
         existingReview.Rating = review.Rating;
         existingReview.MovieId = review.MovieId;
-        existingReview.Movie = review.Movie;
         _context.SaveChanges();
       }
     }

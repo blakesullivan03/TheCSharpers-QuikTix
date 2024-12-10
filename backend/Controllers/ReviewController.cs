@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using TheCSharpers_QuikTix.Models;
 using TheCSharpers_QuikTix.Services.Implementation;
 using System.Collections.Generic;
+using TheCSharpers_QuikTix.Services.Interfaces;
 
 namespace TheCSharpers_QuikTix.Controllers
 {
@@ -9,10 +10,10 @@ namespace TheCSharpers_QuikTix.Controllers
   [Route("api/[controller]")]
   public class ReviewController : ControllerBase
   {
-    private readonly ReviewService _reviewService;
-    private readonly MovieService _movieService;
+    private readonly IReviewService _reviewService;
+    private readonly IMovieService _movieService;
 
-    public ReviewController(ReviewService reviewService, MovieService movieService)
+    public ReviewController(IReviewService reviewService, IMovieService movieService)
     {
       _reviewService = reviewService;
       _movieService = movieService;
