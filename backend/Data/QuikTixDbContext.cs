@@ -55,6 +55,8 @@ public class QuikTixDbContext : DbContext
                     .IsRequired();
                     entity.Property(t => t.MovieId)
                     .IsRequired();
+                    entity.Property(t => t.IsAvailable)
+                        .IsRequired();
 
                     // Configure the relationship between Ticket and Movie
                     entity.HasOne(r => r.Movie)
@@ -67,16 +69,15 @@ public class QuikTixDbContext : DbContext
         {
             entity.HasKey(s => s.Id);
             entity.Property(s => s.MovieId).IsRequired();
-            entity.Property(s => s.MovieTitle).IsRequired();
             entity.Property(s => s.StartTime).IsRequired();
             entity.Property(s => s.AdultTicketCount).IsRequired();
             entity.Property(s => s.ChildTicketCount).IsRequired();
 
-            //     // Configure the relationship between Showtime and Movie
-            //     entity.HasOne(s => s.Movie)
-            //         .WithMany(m => m.Showtimes)
-            //         .HasForeignKey(s => s.MovieId)
-            //         .OnDelete(DeleteBehavior.Cascade);  // Cascade delete showtimes when a movie is deleted
+            // Configure the relationship between Showtime and Movie
+            entity.HasOne(s => s.Movie)
+                .WithMany(m => m.Showtimes)
+                .HasForeignKey(s => s.MovieId)
+                .OnDelete(DeleteBehavior.Cascade);  // Cascade delete showtimes when a movie is deleted
         });
 
         // Configure the Review entity

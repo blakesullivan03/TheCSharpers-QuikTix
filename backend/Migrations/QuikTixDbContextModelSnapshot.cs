@@ -108,10 +108,6 @@ namespace TheCSharpers_QuikTix.Migrations
                     b.Property<int>("MovieId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("MovieTitle")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("TEXT");
 
@@ -129,6 +125,9 @@ namespace TheCSharpers_QuikTix.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("CartId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsAvailable")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("MovieId")
@@ -171,11 +170,13 @@ namespace TheCSharpers_QuikTix.Migrations
 
             modelBuilder.Entity("TheCSharpers_QuikTix.Models.Showtime", b =>
                 {
-                    b.HasOne("TheCSharpers_QuikTix.Models.Movie", null)
+                    b.HasOne("TheCSharpers_QuikTix.Models.Movie", "Movie")
                         .WithMany("Showtimes")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("TheCSharpers_QuikTix.Models.Ticket", b =>

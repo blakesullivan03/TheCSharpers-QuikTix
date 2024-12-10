@@ -8,13 +8,15 @@ namespace TheCSharpers_QuikTix.Models
         public string? TicketType { get; set; } // "Adult" or "Child"
         public decimal Price { get; set; }
         public DateTime PurchaseTime { get; set; }
-    
+
         public int CartId { get; set; }
 
         public Cart? Cart { get; set; }
-    
+
         public int MovieId { get; set; }
         public Movie? Movie { get; set; }
+
+        public Boolean IsAvailable { get; set; }
     }
 
 }
