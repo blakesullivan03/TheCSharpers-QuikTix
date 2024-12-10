@@ -60,11 +60,24 @@ namespace QuikTix.Controllers
             return Ok(new { message = "Tickets added to cart.", cart = _context.Carts });
         }
 
-        [HttpGet("get-cart")]
-        public IActionResult GetCart()
+        // Get Cart By ID
+        [HttpGet("get-cart/{cartId}")]
+        public IActionResult GetCartById(int cartId)
         {
-            var cart = _context.Carts.ToList();
+            var cart = _context.Carts.Find(cartId);
+            if (cart == null)
+            {
+                return NotFound();
+            }
             return Ok(cart);
+        }
+
+        // Get All Carts
+        [HttpGet("get-all-carts")]
+        public IActionResult GetAllCarts()
+        {
+            var carts = _context.Carts;
+            return Ok(carts);
         }
 
         [HttpDelete("clear-cart")]
