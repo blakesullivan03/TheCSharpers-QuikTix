@@ -179,11 +179,11 @@ const MovieListPage = () => {
                 )}
               </div>
               <div className="movie-actions">
-                <button onClick={() => navigate(`/movies/${movie.id}`)}>
-                  Buy Tickets
+                <button onClick={() => navigate(`/movies/${movie.id}/add-review`)}>
+                  Add Review
                 </button>
                 <button onClick={() => navigate(`/movies/${movie.id}/reviews`)}>
-                  Add Review
+                  View Reviews
                 </button>
               </div>
             </div>

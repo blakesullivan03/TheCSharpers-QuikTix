@@ -37,3 +37,13 @@ export const removeTicketFromCart = async (cartId) => {
 export const clearCart = async () => {
   await api.delete("/Cart/clear");
 }
+
+export const addReview = async (movieId, review) => {
+  const response = await api.post(`/Review/AddReview/${movieId}`, review);
+  return response.data;
+};
+
+export const getReviews = async (movieId) => {
+  const response = await api.get(`/Review/${movieId}`);
+  return response.data;
+};

@@ -19,8 +19,8 @@ namespace TheCSharpers_QuikTix.Controllers
       _movieService = movieService;
     }
 
-    [HttpPost]
-    public IActionResult AddReview([FromBody] Review review, [FromQuery] int movieId)
+    [HttpPost("AddReview/{movieId}")]
+    public IActionResult AddReview(int movieId, [FromBody] Review review)
     {
       var movie = _movieService.GetMovieById(movieId);
       _reviewService.AddReview(movie, review);

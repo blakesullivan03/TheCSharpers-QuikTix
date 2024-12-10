@@ -111,6 +111,8 @@ namespace TheCSharpers_QuikTix.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MovieId");
+
                     b.ToTable("Showtimes");
                 });
 
@@ -151,6 +153,15 @@ namespace TheCSharpers_QuikTix.Migrations
                     b.ToTable("Tickets");
                 });
 
+            modelBuilder.Entity("TheCSharpers_QuikTix.Models.Showtime", b =>
+                {
+                    b.HasOne("TheCSharpers_QuikTix.Models.Movie", null)
+                        .WithMany("Showtimes")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("TheCSharpers_QuikTix.Models.Ticket", b =>
                 {
                     b.HasOne("TheCSharpers_QuikTix.Models.Cart", "Cart")
@@ -173,6 +184,11 @@ namespace TheCSharpers_QuikTix.Migrations
             modelBuilder.Entity("TheCSharpers_QuikTix.Models.Cart", b =>
                 {
                     b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("TheCSharpers_QuikTix.Models.Movie", b =>
+                {
+                    b.Navigation("Showtimes");
                 });
 #pragma warning restore 612, 618
         }
