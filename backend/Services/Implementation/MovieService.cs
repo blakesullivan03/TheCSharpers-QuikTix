@@ -113,10 +113,11 @@ public class MovieService : IMovieService
     {
         var movie = _context.Movies.Find(movieId);
 
-        for(int i = 0; i < numberOfTickets; i++)
+        for (int i = 0; i < numberOfTickets; i++)
         {
             Ticket tick = new Ticket();
-            movie.Tickets.Add(tick);
+            tick.MovieId = movieId;
+            _context.Tickets.Add(tick);
         }
 
         _context.SaveChanges();
@@ -124,9 +125,16 @@ public class MovieService : IMovieService
 
     public void RemoveTicketsFromMovie(int movieId, int numberOfTickets)
     {
-        var movie = _contect.Movies.Find(movieId):
+        var movie = _context.Movies.Find(movieId);
 
-        movie.Tickets.RemoveRange(movie.Tickets.Count - numberOfTickets, numberOfTickets);
+        for (int i = 0; i < numberOfTickets; i++)
+        {
+            var ticket = _context.Tickets.FirstOrDefault(t => t.MovieId == movieId);
+            if (ticket != null)
+            {
+                _context.Tickets.Remove(ticket);
+            }
+        }
 
         _context.SaveChanges();
     }
