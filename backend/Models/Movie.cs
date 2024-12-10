@@ -14,7 +14,7 @@ namespace TheCSharpers_QuikTix.Models
 
         public double? Rating { get; set; } // Nullable to allow unrated movies
 
-        public required List<Showtime> Showtimes { get; set; } = new List<Showtime>(); // Updated from Showtime to Showtimes
+        public ICollection<Showtime> Showtimes { get; set; } = new List<Showtime>();
 
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
 
