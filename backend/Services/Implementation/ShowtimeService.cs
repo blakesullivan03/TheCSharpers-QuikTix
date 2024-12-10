@@ -19,6 +19,10 @@ namespace TheCSharpers_QuikTix.Services.Implementation
         {
             _context.Showtimes.Add(showtime);
             _context.SaveChanges();
+            if (showtime == null)
+            {
+                throw new KeyNotFoundException($"Showtime is null");
+            }
             return showtime;
         }
 
@@ -52,6 +56,10 @@ namespace TheCSharpers_QuikTix.Services.Implementation
                 showtime.ChildTicketCount = updatedShowtime.ChildTicketCount;
 
                 _context.SaveChanges();
+            }
+            if (showtime == null)
+            {
+                throw new KeyNotFoundException($"Showtime is null");
             }
             return showtime;
         }
