@@ -5,17 +5,18 @@ import "../pages.css/MovieListPage.css";
 
 const MovieListPage = () => {
   const [movies, setMovies] = useState([]);
-  const [sortedMovies, setSortedMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
   const [sortOption, setSortOption] = useState("Original");
-  const navigate = useNavigate();
+  const [selectedDate, setSelectedDate] = useState("");
   const [carouselIndex, setCarouselIndex] = useState(0);
+  const navigate = useNavigate();
 
   // Fetch movies on component mount
   useEffect(() => {
     getMovies()
       .then((movies) => {
         setMovies(movies);
-        setSortedMovies(movies);
+        setFilteredMovies(movies);
       })
       .catch((error) => {
         console.error("Error fetching movies:", error);
@@ -36,7 +37,7 @@ const MovieListPage = () => {
     const selectedOption = e.target.value;
     setSortOption(selectedOption);
 
-    let sortedList = [...movies];
+    let sortedList = [...filteredMovies];
     switch (selectedOption) {
       case "AtoZ":
         sortedList.sort((a, b) => a.title.localeCompare(b.title));
@@ -44,28 +45,42 @@ const MovieListPage = () => {
       case "ZtoA":
         sortedList.sort((a, b) => b.title.localeCompare(a.title));
         break;
-      // case "ReleaseDateAsc":
-      //   sortedList.sort((a, b) => new Date(a.releaseDate) - new Date(b.releaseDate));
-      //   break;
-      // case "ReleaseDateDesc":
-      //   sortedList.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
-      //   break;
-      // case "DurationAsc":
-      //   sortedList.sort((a, b) => a.duration - b.duration);
-      //   break;
-      // case "DurationDesc":
-      //   sortedList.sort((a, b) => b.duration - a.duration);
-      //   break;
+      case "EarliestShowtime":
+        sortedList.sort(
+          (a, b) =>
+            new Date(a.showtimes[0]?.startTime || Infinity) -
+            new Date(b.showtimes[0]?.startTime || Infinity)
+        );
+        break;
       case "BestRated":
         sortedList.sort((a, b) => b.rating - a.rating);
         break;
       case "Popular":
-        sortedList.sort((a, b) => b.popularity - a.popularity);
+        sortedList.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
         break;
       default:
-        sortedList = [...movies];
+        sortedList = [...filteredMovies];
     }
-    setSortedMovies(sortedList);
+    setFilteredMovies(sortedList);
+  };
+
+  // Filter by date
+  const handleDateChange = (e) => {
+    const selectedDate = e.target.value;
+    setSelectedDate(selectedDate);
+
+    if (selectedDate) {
+      const filteredList = movies.filter((movie) =>
+        movie.showtimes.some(
+          (showtime) =>
+            new Date(showtime.startTime).toDateString() ===
+            new Date(selectedDate).toDateString()
+        )
+      );
+      setFilteredMovies(filteredList);
+    } else {
+      setFilteredMovies(movies);
+    }
   };
 
   return (
@@ -91,6 +106,17 @@ const MovieListPage = () => {
         </div>
       </div>
 
+      {/* Calendar View */}
+      <div className="calendar-container">
+        <label htmlFor="filter-date">Filter by Date:</label>
+        <input
+          type="date"
+          id="filter-date"
+          value={selectedDate}
+          onChange={handleDateChange}
+        />
+      </div>
+
       {/* Sorting Dropdown */}
       <div className="sorting-container">
         <label htmlFor="sort-by">Sort Movies By:</label>
@@ -103,10 +129,7 @@ const MovieListPage = () => {
           <option value="Original">Original Order</option>
           <option value="AtoZ">Alphabetical A to Z</option>
           <option value="ZtoA">Alphabetical Z to A</option>
-          {/* <option value="ReleaseDateAsc">Release Date (Ascending)</option> */}
-          {/* <option value="ReleaseDateDesc">Release Date (Descending)</option> */}
-          {/* <option value="DurationAsc">Duration (Ascending)</option> */}
-          {/* <option value="DurationDesc">Duration (Descending)</option> */}
+          <option value="EarliestShowtime">Earliest Showtime</option>
           <option value="BestRated">Best Rated</option>
           <option value="Popular">Most Popular</option>
         </select>
@@ -114,23 +137,54 @@ const MovieListPage = () => {
 
       {/* Movie List Section */}
       <div className="movie-list">
-        {sortedMovies.map((movie) => (
+        {filteredMovies.map((movie) => (
           <div className="movie-item" key={movie.id}>
-            <img
-              src={movie.imagePath || "/assets/image1.png"}
-              alt={movie.title}
-              className="movie-poster"
-            />
+            <div className="movie-poster-section">
+              <img
+                src={movie.imagePath || "/assets/image1.png"}
+                alt={movie.title}
+                className="movie-poster"
+              />
+            </div>
             <div className="movie-details">
               <h2>{movie.title}</h2>
               <p><strong>Genre:</strong> {movie.genre}</p>
               <p><strong>Description:</strong> {movie.description}</p>
-              <p><strong>Duration:</strong> {movie.duration || "N/A"} minutes</p>
               <p><strong>Rating:</strong> {movie.rating || "N/A"} / 10</p>
-              <p><strong>Tickets Available:</strong> {movie.ticketCount || "N/A"}</p>
+              <p><strong>Popularity:</strong> {movie.popularity || "N/A"}</p>
+              <div className="showtimes">
+                <h3>Showtimes:</h3>
+                {movie.showtimes.length > 0 ? (
+                  movie.showtimes.map((showtime) => (
+                    <div key={showtime.id} className="showtime">
+                      <details>
+                        <summary>
+                          {new Date(showtime.startTime).toLocaleString()}
+                        </summary>
+                        <p>Adult Tickets: {showtime.adultTicketCount}</p>
+                        <p>Child Tickets: {showtime.childTicketCount}</p>
+                        <button
+                          onClick={() =>
+                            navigate(`/showtimes/${showtime.id}/book`)
+                          }
+                          className="book-now-button"
+                        >
+                          Book Now
+                        </button>
+                      </details>
+                    </div>
+                  ))
+                ) : (
+                  <p>No Showtimes Available</p>
+                )}
+              </div>
               <div className="movie-actions">
-                <button onClick={() => navigate(`/movies/${movie.id}`)}>Buy Tickets</button>
-                <button onClick={() => navigate(`/movies/${movie.id}/reviews`)}>Add Review</button>
+                <button onClick={() => navigate(`/movies/${movie.id}`)}>
+                  Buy Tickets
+                </button>
+                <button onClick={() => navigate(`/movies/${movie.id}/reviews`)}>
+                  Add Review
+                </button>
               </div>
             </div>
           </div>
