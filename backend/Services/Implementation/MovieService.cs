@@ -17,7 +17,7 @@ public class MovieService : IMovieService
 
     public IEnumerable<Movie> GetMovies()
     {
-        return _context.Movies.ToList();
+        return _context.Movies.Include(m => m.Showtimes).ToList();
     }
 
     /*public IEnumerable<Review> GetReviewsForMovie(int movieId)
