@@ -108,4 +108,26 @@ public class MovieService : IMovieService
         movie.Reviews.Add(review);
         _context.SaveChanges();
     }*/
+
+    public void AddTicketsToMovie(int movieId, int numberOfTickets)
+    {
+        var movie = _context.Movies.Find(movieId);
+
+        for(int i = 0; i < numberOfTickets; i++)
+        {
+            Ticket tick = new Ticket();
+            movie.Tickets.Add(tick);
+        }
+
+        _context.SaveChanges();
+    }
+
+    public void RemoveTicketsFromMovie(int movieId, int numberOfTickets)
+    {
+        var movie = _contect.Movies.Find(movieId):
+
+        movie.Tickets.RemoveRange(movie.Tickets.Count - numberOfTickets, numberOfTickets);
+
+        _context.SaveChanges();
+    }
 }
