@@ -2,10 +2,11 @@ using TheCSharpers_QuikTix.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using TheCSharpers_QuikTix.Services.Interfaces;
 
 namespace TheCSharpers_QuikTix.Services.Implementation
 {
-  public class ReviewService
+  public class ReviewService : IReviewService
   {
     private readonly QuikTixDbContext _context;
 
