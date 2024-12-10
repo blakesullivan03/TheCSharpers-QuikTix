@@ -60,27 +60,27 @@ public class QuikTixDbContext : DbContext
             //         .WithMany(m => m.Showtimes)
             //         .HasForeignKey(s => s.MovieId)
             //         .OnDelete(DeleteBehavior.Cascade);  // Cascade delete showtimes when a movie is deleted
-            // });
+        });
 
-            // Configure the Review entity
-            modelBuilder.Entity<Review>(entity =>
-            {
-                entity.HasKey(r => r.Id);  // Setting Id as the primary key
-                entity.Property(r => r.ReviewerName)
-                    .IsRequired(false);
-                entity.Property(r => r.Comment)
-                    .IsRequired(false);
-                entity.Property(r => r.Rating)
-                    .IsRequired();
-                entity.Property(r => r.MovieId)
-                    .IsRequired();
+        // Configure the Review entity
+        modelBuilder.Entity<Review>(entity =>
+        {
+            entity.HasKey(r => r.Id);  // Setting Id as the primary key
+            entity.Property(r => r.ReviewerName)
+                .IsRequired(false);
+            entity.Property(r => r.Comment)
+                .IsRequired(false);
+            entity.Property(r => r.Rating)
+                .IsRequired();
+            entity.Property(r => r.MovieId)
+                .IsRequired();
 
-                // Configure the relationship between Review and Movie
-                entity.HasOne(r => r.Movie)
-                    .WithMany(m => m.Reviews)
-                    .HasForeignKey(r => r.MovieId)
-                    .OnDelete(DeleteBehavior.Cascade);  // Cascade delete reviews when a movie is deleted
-            });
+            // Configure the relationship between Review and Movie
+            entity.HasOne(r => r.Movie)
+                .WithMany(m => m.Reviews)
+                .HasForeignKey(r => r.MovieId)
+                .OnDelete(DeleteBehavior.Cascade);  // Cascade delete reviews when a movie is deleted
+        });
 
-        }
+    }
 }
