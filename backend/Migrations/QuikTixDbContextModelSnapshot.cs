@@ -68,6 +68,31 @@ namespace TheCSharpers_QuikTix.Migrations
                     b.ToTable("Movies");
                 });
 
+            modelBuilder.Entity("TheCSharpers_QuikTix.Models.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ReviewerName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("TheCSharpers_QuikTix.Models.Showtime", b =>
                 {
                     b.Property<int>("Id")
@@ -110,7 +135,7 @@ namespace TheCSharpers_QuikTix.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("PurchaseTime")
                         .HasColumnType("TEXT");
@@ -119,6 +144,7 @@ namespace TheCSharpers_QuikTix.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("TicketType")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -130,6 +156,17 @@ namespace TheCSharpers_QuikTix.Migrations
                     b.HasIndex("ShowtimeId");
 
                     b.ToTable("Tickets");
+                });
+
+            modelBuilder.Entity("TheCSharpers_QuikTix.Models.Review", b =>
+                {
+                    b.HasOne("TheCSharpers_QuikTix.Models.Movie", "Movie")
+                        .WithMany("Reviews")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("TheCSharpers_QuikTix.Models.Showtime", b =>
@@ -150,7 +187,7 @@ namespace TheCSharpers_QuikTix.Migrations
                         .IsRequired();
 
                     b.HasOne("TheCSharpers_QuikTix.Models.Movie", "Movie")
-                        .WithMany()
+                        .WithMany("Tickets")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -175,7 +212,11 @@ namespace TheCSharpers_QuikTix.Migrations
 
             modelBuilder.Entity("TheCSharpers_QuikTix.Models.Movie", b =>
                 {
+                    b.Navigation("Reviews");
+
                     b.Navigation("Showtimes");
+
+                    b.Navigation("Tickets");
                 });
 #pragma warning restore 612, 618
         }

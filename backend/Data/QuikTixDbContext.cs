@@ -41,10 +41,27 @@ public class QuikTixDbContext : DbContext
         });
 
         modelBuilder.Entity<Ticket>(entity =>
-        {
-            entity.HasKey(t => t.Id);
-            entity.Property(t => t.Price).HasColumnType("decimal(18,2)");
-        });
+                {
+                    entity.HasKey(t => t.Id);  // Setting Id as the primary key
+                    entity.Property(t => t.ShowtimeId)
+                        .IsRequired();
+                    entity.Property(t => t.TicketType)
+                        .IsRequired();
+                    entity.Property(t => t.Price)
+                        .IsRequired();
+                    entity.Property(t => t.PurchaseTime)
+                        .IsRequired();
+                    entity.Property(t => t.CartId)
+                    .IsRequired();
+                    entity.Property(t => t.MovieId)
+                    .IsRequired();
+
+                    // Configure the relationship between Ticket and Movie
+                    entity.HasOne(r => r.Movie)
+                        .WithMany(m => m.Tickets)
+                        .HasForeignKey(r => r.MovieId)
+                        .OnDelete(DeleteBehavior.Cascade);  // Cascade delete tickets when a movie is deleted
+                });
 
         modelBuilder.Entity<Showtime>(entity =>
         {

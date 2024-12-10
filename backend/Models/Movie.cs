@@ -18,6 +18,8 @@ namespace TheCSharpers_QuikTix.Models
 
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
 
+        public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+
 
     }
 }
