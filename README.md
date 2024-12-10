@@ -1,6 +1,6 @@
 # QuikTix Project
 
-QuikTix is a web application designed for managing movie ticket bookings, providing functionalities such as viewing movies, booking tickets, and viewing reviews. This project uses ASP.NET Core with Entity Framework Core for the backend and SQL Server LocalDB for the database.
+QuikTix is a web application designed for managing movie ticket bookings, providing functionalities such as viewing movies, booking tickets, and viewing reviews. This project uses ASP.NET Core with Entity Framework Core for the backend and SQL Lite for the database.
 
 ## Getting Started
 
@@ -9,7 +9,8 @@ Follow these steps to set up the project and run it locally on your machine.
 ### Prerequisites
 
 1. **Install .NET SDK**: Make sure you have the [latest version of .NET SDK](https://dotnet.microsoft.com/download) installed.
-2. **Install SQL Server LocalDB**: Follow the official [Microsoft LocalDB Installation Guide](https://learn.microsoft.com/sql).
+2. **Install SQL Lite**: Follow the official [SQLite Database Download](https://learn.microsoft.com/en-us/ef/core/providers/sqlite/?tabs=dotnet-core-cli).
+3. **Install Node.js** Make sure you have [latest version of Node.js](https://nodejs.org/en/download/package-manager)
 
 ### Setup
 
@@ -18,22 +19,9 @@ Follow these steps to set up the project and run it locally on your machine.
    git clone https://github.com/your-username/QuikTix.git
    cd QuikTix
 2. **Install Dependecies**
-   dotnet restore
-3. **Create an Instance of the Local Database using LocalDB**<br />
-   Verify LocalDB is installed<br />
-   sqllocaldb i<br />
-   This will show a list of LocalDB instances. If you see (localdb)\MSSQLLocalDB in the list, LocalDB is installed.
-
-   Create the Database<br />
-   dotnet ef database update<br />
-   This will use Entity Framework Core to create a LocalDB instance named QuikTixDb and apply all necessary migrations
-
-   Set your Connection String<br />
-   Ensure the connection string in appsettings.Development.json looks like this:<br />
-     "ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=QuikTixDb;Trusted_Connection=True;"
-     }
-4. **Run the Application**<br />
-   dotnet run<br />
-   Once the application is running, you can access the API via Swagger UI at http://localhost:5056/swagger to test the API endpoints.
+   npm install concurrently
+3. **Run the Application**<br />
+   npm run start<br />
+   Once the application is running, you can access the API via Swagger UI at http://localhost:7267/swagger/index.html to test the API endpoints.
+   Thne, the frontend can be viewed at http://localhost:5173/
    
