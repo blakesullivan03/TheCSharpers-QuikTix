@@ -35,9 +35,9 @@ namespace TheCSharpers_QuikTix.Controllers
     }
 
     [HttpPut]
-    public IActionResult EditReview([FromBody] Review review)
+    public IActionResult EditReview([FromBody] Review review, [FromQuery] int id)
     {
-      _reviewService.EditReview(review);
+      _reviewService.EditReview(review, id);
       return Ok();
     }
 

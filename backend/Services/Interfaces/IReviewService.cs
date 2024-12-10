@@ -7,7 +7,7 @@ namespace TheCSharpers_QuikTix.Services.Interfaces
   {
     void AddReview(Movie movie, Review review);
     void RemoveReview(int id);
-    void EditReview(Review review);
+    void EditReview(Review review, int id);
     IEnumerable<Review> GetReviews(Movie movie);
   }
 }

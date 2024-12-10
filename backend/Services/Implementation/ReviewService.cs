@@ -32,9 +32,9 @@ namespace TheCSharpers_QuikTix.Services.Implementation
       }
     }
 
-    public void EditReview(Review review)
+    public void EditReview(Review review, int id)
     {
-      var existingReview = _context.Reviews.Find(review.Id);
+      var existingReview = _context.Reviews.Find(id);
       if (existingReview != null)
       {
         existingReview.ReviewerName = review.ReviewerName;
