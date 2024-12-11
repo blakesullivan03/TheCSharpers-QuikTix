@@ -7,6 +7,7 @@ import AddReviewPage from "./pages/AddReviewPage";
 import ReviewPage from "./pages/ReviewPage";
 import CartPage from "./pages/CartPage";
 import PaymentPage from "./pages/PaymentPage";
+import CustomerDetails from "./pages/CustomerDetailsPage";
 import NavBar from "./components/NavBar";
 
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/movies/:movieId/reviews" element={<ReviewPage />} />
         <Route path="/cart/:cartId" element={<CartPage />} />
         <Route path="/payment-page/:cartId" element={<PaymentPage />} />
+        <Route path="/customer/:customerId" element={<CustomerDetails />} />
       </Routes>
     </Router>
   );

@@ -27,6 +27,33 @@ namespace TheCSharpers_QuikTix.Migrations
                     b.ToTable("Carts");
                 });
 
+            modelBuilder.Entity("TheCSharpers_QuikTix.Models.Customer", b =>
+                {
+                    b.Property<int>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("PurchaseHistory")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CustomerId");
+
+                    b.ToTable("Customers");
+                });
+
             modelBuilder.Entity("TheCSharpers_QuikTix.Models.Movie", b =>
                 {
                     b.Property<int>("Id")
@@ -108,9 +135,6 @@ namespace TheCSharpers_QuikTix.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("CartId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsAvailable")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("MovieId")

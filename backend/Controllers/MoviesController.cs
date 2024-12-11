@@ -18,15 +18,15 @@ namespace TheCSharpers_QuikTix.Controllers
         }
 
         // GET: api/movies/get
-        [HttpGet("get")]
+        [HttpGet("GetMovies")]
         public ActionResult<IEnumerable<Movie>> GetMovies()
         {
             var movies = _movieService.GetMovies();
             return Ok(movies);
         }
 
-        // GET: api/movies/{id}
-        [HttpGet("{id}")]
+        // GET: api/movies/GetMovieBy/{id}
+        [HttpGet("GetMovieBy/{id}")]
         public ActionResult<Movie> GetMovieById(int id)
         {
             try
@@ -40,8 +40,8 @@ namespace TheCSharpers_QuikTix.Controllers
             }
         }
 
-        // POST: api/movies/add
-        [HttpPost("add")]
+        // POST: api/movies/AddMovie
+        [HttpPost("AddMovie")]
         public IActionResult AddMovie([FromBody] Movie movie)
         {
             movie.Id = 0; // Ensure the Movie Id is Not Set
@@ -49,8 +49,8 @@ namespace TheCSharpers_QuikTix.Controllers
             return CreatedAtAction(nameof(GetMovies), new { id = movie.Id }, movie);
         }
 
-        // PUT: api/movies/{id}
-        [HttpPut("{id}")]
+        // PUT: api/movies/EditMovie/{id}
+        [HttpPut("EditMovie/{id}")]
         public IActionResult UpdateMovie(int id, Movie updatedMovie)
         {
             _movieService.UpdateMovie(id, updatedMovie);
@@ -70,6 +70,15 @@ namespace TheCSharpers_QuikTix.Controllers
             _movieService.DeleteMovie(id);
             return NoContent();
         }
+
+        /* GET : Get All Tickets for a Movie
+        [HttpGet("{id}/tickets")]
+        public ActionResult<IEnumerable<Ticket>> GetTicketsForMovie(int id)
+        {
+            var tickets = _movieService.GetTicketsForMovie(id);
+            return Ok(tickets);
+        }*/
+
 
     }   
 }

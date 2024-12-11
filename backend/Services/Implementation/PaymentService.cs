@@ -4,6 +4,14 @@ using System.Text.RegularExpressions;
 using TheCSharpers_QuikTix.Services.Interfaces;
 public class PaymentService : IPaymentService
 {
+
+    private readonly QuikTixDbContext _context;
+
+    public PaymentService(QuikTixDbContext context)
+    {
+        _context = context;
+    }
+
     // Process payment for the cart
     public bool ProcessPayment(PaymentInfo paymentInfo, Cart cart, Customer customer)
     {
@@ -12,11 +20,19 @@ public class PaymentService : IPaymentService
             // Simulate payment success/failure logic
             if (true)  // Payment succeeds
             {
-                // Add purchased tickets to customer's purchase history
-                foreach (var ticket in cart.Tickets)
+                // Add Purchase History
+                Console.WriteLine(cart.Tickets.Count);
+                for(int i = 0; i < cart.Tickets.Count; i++)
                 {
-                    customer.PurchaseHistory.Add(ticket);
+                    var id = cart.Tickets[i].Id;
+                    var ticketString = id.ToString();
+                        if (!string.IsNullOrEmpty(ticketString))
+                        {
+                            customer.PurchaseHistory.Add(" Order Confirmation Number - " + ticketString);
+                        }
                 }
+                _context.Update(customer);
+                _context.SaveChanges();
                 return true;
             }
         }
@@ -34,21 +50,21 @@ public class PaymentService : IPaymentService
 
         Regex r1 = new Regex(@"^\d\d\d\d-\d\d\d\d-\d\d\d\d-\d\d\d\d$");
 
-        if (!(r1.Match(paymentInfo.CardNumber).Success))
+        if (paymentInfo.CardNumber == null || !(r1.Match(paymentInfo.CardNumber).Success))
         {
             return false;
         }
 
         Regex r2 = new Regex(@"^(0[1-9]|1[0-2])\/2[4-9]$");
 
-        if (!(r2.Match(paymentInfo.ExpiryDate).Success))
+        if (paymentInfo.ExpiryDate == null || !(r2.Match(paymentInfo.ExpiryDate).Success))
         {
             return false;
         }
 
         Regex r3 = new Regex(@"^\d\d\d$");
 
-        if (!(r3.Match(paymentInfo.CVV).Success))
+        if (paymentInfo.CVV == null || !(r3.Match(paymentInfo.CVV).Success))
         {
             return false;
         }

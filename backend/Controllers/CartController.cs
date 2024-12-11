@@ -81,7 +81,7 @@ namespace QuikTix.Controllers
                     MovieId = request.MovieId,
                     TicketType = "Adult",
                     Quantity = request.AdultTickets,
-                    Price = adultTicketPrice * request.AdultTickets
+                    Price = adultTicketPrice
                 };
                 cart.Tickets.Add(adultCartItem);
                 showtime.AdultTicketCount -= request.AdultTickets;
@@ -95,7 +95,7 @@ namespace QuikTix.Controllers
                     MovieId = request.MovieId,
                     TicketType = "Child",
                     Quantity = request.ChildTickets,
-                    Price = childTicketPrice * request.ChildTickets
+                    Price = childTicketPrice
                 };
                 cart.Tickets.Add(childCartItem);
                 showtime.ChildTicketCount -= request.ChildTickets;
@@ -139,20 +139,34 @@ namespace QuikTix.Controllers
             return Ok(new { message = "Cart cleared." });
         }
 
-        [HttpDelete("remove/{cartId}")]
-        public IActionResult RemoveFromCart(int cartId)
+        [HttpDelete("remove/{cartId}/{ticketId}")]
+        public IActionResult RemoveSingleTicket(int cartId, int ticketId)
         {
-            var cartItem = _context.Carts.Find(cartId);
+            // Find the cart item by cartId
+            var cartItem = _context.Carts
+                .Include(c => c.Tickets) // Assuming 'Tickets' is a navigation property in the 'Cart' model
+                .FirstOrDefault(c => c.CartId == cartId);
+
             if (cartItem == null)
             {
-                return NotFound();
+                return NotFound(new { message = $"Cart with ID {cartId} not found." });
             }
 
-            _context.Carts.Remove(cartItem);
+            // Find the specific ticket within the cart
+            var ticket = cartItem.Tickets.FirstOrDefault(t => t.Id == ticketId);
+            if (ticket == null)
+            {
+                return NotFound(new { message = $"Ticket with ID {ticketId} not found in Cart {cartId}." });
+            }
+
+            // Remove the ticket from the cart
+            cartItem.Tickets.Remove(ticket);
             _context.SaveChanges();
-            return Ok(new { message = "Item removed from cart." });
+
+            return Ok(new { message = $"Ticket with ID {ticketId} removed from Cart {cartId}." });
         }
-    }
+
+            }
     
 
     // Define a class to represent the request body for adding tickets
@@ -164,29 +178,3 @@ namespace QuikTix.Controllers
         public int ChildTickets { get; set; }
     }
 }
-/*using Microsoft.AspNetCore.Mvc;
-using TheCSharpers_QuikTix.Models;
-using TheCSharpers_QuikTix.Services;
-
-[ApiController]
-[Route("api/[controller]")]
-public class CartController : ControllerBase
-{
-    private readonly CartService _cartService;
-    private readonly TicketService _ticketService;
-
-    public CartController(CartService cartService, TicketService ticketService)
-    {
-        _cartService = cartService;
-        _ticketService = ticketService;
-    }
-
-    // Add ticket to a cart
-    [HttpPost("{cartId}/showtime/{showtimeId}/ticket/{ticketType}/price/{price}")]
-    public IActionResult AddTicketToCart(int cartId, int showtimeId, string ticketType, decimal price)
-    {
-        var ticket = _ticketService.CreateTicket(showtimeId, ticketType, price, cartId);
-        _cartService.AddTicketToCart(cartId, ticket);
-        return Ok(ticket);
-    }
-}*/

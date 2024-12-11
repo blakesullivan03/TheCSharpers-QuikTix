@@ -33,17 +33,16 @@ namespace TheCSharpers_QuikTix.Services.Implementation
             return _context.Showtimes.Where(s => s.MovieId == movieId).ToList();
         }
 
-        /*Get a showtime by its Id (including Movie if needed)
-        public Showtime GetShowtimeById(int id)
+        //Get a showtime by its Id (including Movie if needed)
+        public Showtime GetShowtimeById(int movieId, int id)
         {
-            var showtime = _context.Showtimes.Include(s => s.Movie)  // If you still need Movie details
-                                              .FirstOrDefault(s => s.Id == id);
+            var showtime = _context.Showtimes.Where(s => s.MovieId == movieId).FirstOrDefault(s => s.Id == id);
             if (showtime == null)
             {
                 throw new KeyNotFoundException($"Showtime with Id {id} not found.");
             }
             return showtime;
-        }*/
+        }
 
         // Update an existing showtime
         public Showtime UpdateShowtime(int id, Showtime updatedShowtime)

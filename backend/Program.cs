@@ -20,6 +20,9 @@ builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IShowtimeService, ShowtimeService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 // Use CORDS to allow the Frontend to Make Requests
 builder.Services.AddCors(options =>

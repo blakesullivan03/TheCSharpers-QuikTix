@@ -16,8 +16,8 @@ function CartPage() {
       .catch((error) => console.error("Failed to fetch cart data:", error));
   }, [cartId]);
 
-  const handleRemoveFromCart = (ticketId) => {
-    removeTicketFromCart(ticketId)
+  const handleRemoveFromCart = (cartId, ticketId) => {
+    removeTicketFromCart(cartId, ticketId)
       .then(() => {
         setCart((prevCart) => ({
           ...prevCart,
@@ -54,7 +54,7 @@ function CartPage() {
               <p>Quantity: {ticket.quantity}</p>
               <p>Price per Ticket: ${ticket.price.toFixed(2)}</p>
               <p>Total: ${(ticket.price * ticket.quantity).toFixed(2)}</p>
-              <button onClick={() => handleRemoveFromCart(ticket.id)}>
+              <button onClick={() => handleRemoveFromCart(cart.cartId, ticket.id)}>
                 Remove
               </button>
             </div>

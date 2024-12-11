@@ -7,7 +7,7 @@ namespace TheCSharpers_QuikTix.Services
     {
         Showtime AddShowtime(Showtime showtime);
         IEnumerable<Showtime> GetAllShowtimes(int movieId);
-        //Showtime GetShowtimeById(int id);
+        Showtime GetShowtimeById(int movieId, int id);
         Showtime UpdateShowtime(int id, Showtime updatedShowtime);
         bool DeleteShowtime(int id);
     }

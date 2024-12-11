@@ -27,14 +27,14 @@ namespace TheCSharpers_QuikTix.Controllers
       return Ok();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("RemoveReview/{id}")]
     public IActionResult RemoveReview(int id)
     {
       _reviewService.RemoveReview(id);
       return Ok();
     }
 
-    [HttpPut]
+    [HttpPut("EditReview/{id}")]
     public IActionResult EditReview([FromBody] Review review, [FromQuery] int id)
     {
       _reviewService.EditReview(review, id);

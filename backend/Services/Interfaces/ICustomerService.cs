@@ -1,4 +1,4 @@
-/*using System.Collections.Generic;
+using System.Collections.Generic;
 using TheCSharpers_QuikTix.Models;
 
 namespace TheCSharpers_QuikTix.Services.Interfaces
@@ -17,4 +17,4 @@ namespace TheCSharpers_QuikTix.Services.Interfaces
         // Update Customer Information
         void UpdateCustomer(Customer updatedCustomer);
     }
-}*/
+}

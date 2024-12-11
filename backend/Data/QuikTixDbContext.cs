@@ -4,12 +4,11 @@ using TheCSharpers_QuikTix.Models;
 
 public class QuikTixDbContext : DbContext
 {
+    public DbSet<Customer> Customers { get; set; } = null!;
     public DbSet<Movie> Movies { get; set; } = null!;
     public DbSet<Showtime> Showtimes { get; set; } = null!;
     public DbSet<Cart> Carts { get; set; } = null!;
-
     public DbSet<Review> Reviews { get; set; } = null!;
-
     public DbSet<Ticket> Tickets { get; set; } = null!;
     public QuikTixDbContext(DbContextOptions<QuikTixDbContext> options) : base(options) { }
 
@@ -17,6 +16,19 @@ public class QuikTixDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        // Configure the Customer entity
+        modelBuilder.Entity<Customer>(entity =>
+        {
+            entity.HasKey(c => c.CustomerId);  // Setting Id as the primary key
+            entity.Property(c => c.Name)
+                .IsRequired();  // Name is required
+            entity.Property(c => c.Email)
+                .IsRequired();  // Email is required
+            entity.Property(c => c.PhoneNumber)
+                .IsRequired();  // PhoneNumber is required
+            
+        });
 
         // Configure the Movie entity
         modelBuilder.Entity<Movie>(entity =>
@@ -38,8 +50,7 @@ public class QuikTixDbContext : DbContext
             entity.HasKey(c => c.CartId);  // Setting CartId as the primary key
             entity.Property(c => c.CartId)
                 .ValueGeneratedOnAdd();  // Auto-generate CartId
-            //entity.Property(c => c.Price)
-                //.HasColumnType("decimal(18,2)");  // Define price precision and scale
+
         });
 
         modelBuilder.Entity<Ticket>(entity =>
@@ -55,14 +66,7 @@ public class QuikTixDbContext : DbContext
                         .IsRequired();
                     entity.Property(t => t.Price)
                         .IsRequired();
-                    //entity.Property(t => t.PurchaseTime)
-                        //.IsRequired();
-                    //entity.Property(t => t.CartId)
-                    //.IsRequired();
-                    entity.Property(t => t.MovieId)
-                    .IsRequired();
-                    entity.Property(t => t.IsAvailable)
-                        .IsRequired();
+
                 });
 
         modelBuilder.Entity<Showtime>(entity =>

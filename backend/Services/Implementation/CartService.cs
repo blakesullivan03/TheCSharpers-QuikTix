@@ -38,7 +38,7 @@ namespace TheCSharpers_QuikTix.Services
         }
 
         // Get the cart by ID
-        public Cart GetCart(int cartId)
+        public Cart GetCartById(int cartId)
         {
             var cart = _context.Carts.Include(c => c.Tickets)
                                       .FirstOrDefault(c => c.CartId == cartId);

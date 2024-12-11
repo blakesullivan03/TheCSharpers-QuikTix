@@ -10,7 +10,7 @@
   .carousel-container {
     overflow: hidden;
     width: 100%;
-    height: 200px; /* Height of the images */
+    height: 400px; /* Height of the images */
     margin-bottom: 20px;
     position: relative;
   }
@@ -21,7 +21,7 @@
   }
   
   .carousel-item {
-    height: 200px;
+    height: 400px;
     width: 300px; /* Adjust width as needed */
     object-fit: cover;
     margin-right: 10px;

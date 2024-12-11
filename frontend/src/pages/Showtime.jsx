@@ -13,7 +13,7 @@ const Showtime = ({ showtime, movieId }) => {
 
             // Create a New Cart
             const response = await createCart();
-            console.log("Cart created:", response.cart.cartId);
+           // console.log("Cart created:", response.cart.cartId);
 
             // Get the Cart ID
             const cartId = response.cart.cartId;
@@ -37,7 +37,7 @@ const Showtime = ({ showtime, movieId }) => {
 
 
             // Alert the User that the Tickets have been added to the Cart
-            alert('Tickets added to cart');
+            //alert('Tickets added to cart');
 
             // Navigate to the Cart Page via ID
             navigate(`/cart/${cartId}`);

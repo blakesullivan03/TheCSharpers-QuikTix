@@ -9,7 +9,7 @@ const api = axios.create({
 });
 
 export const getMovies = async () => {
-  const response = await api.get("/Movies/get");
+  const response = await api.get("/Movies/GetMovies");
   return response.data;
 };
 
@@ -40,8 +40,8 @@ export const getAllCarts = async () => {
   return response.data;
 };
 
-export const removeTicketFromCart = async (cartId) => {
-  await api.delete(`/Cart/remove/${cartId}`);
+export const removeTicketFromCart = async (cartId, ticketId) => {
+  await api.delete(`/Cart/remove/${cartId}/${ticketId}`);
 }
 
 export const clearCart = async () => {
@@ -57,3 +57,27 @@ export const getReviews = async (movieId) => {
   const response = await api.get(`/Review/${movieId}`);
   return response.data;
 };
+
+
+export const processPayment = async (cartId, customerId, { cardNumber, cardHolderName, expiryDate, cvv }) => {
+  try {
+    const response = await api.post('/Checkout/process-payment', {
+      cartId,              
+      customerId,
+      cardHolderName,          
+      cardNumber,
+      expiryDate, 
+      cvv
+    });
+
+    return response.data; 
+  } catch (error) {
+    throw new Error(error.response?.data || 'Payment processing failed');
+  }
+};
+
+export const getCustomerById = async (customerId) => {
+  const response = await api.get(`/Customer/GetCustomerByID/${customerId}`);
+  return response.data;
+}
+

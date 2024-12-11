@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMovies } from "../apiService";
 import "../pages.css/MovieListPage.css";
+import imagePath from './assets/image1.png';
+import imagePath2 from './assets/starwars.jpg';
+import imagePath3 from './assets/matrix.jpg';
 
 const MovieListPage = () => {
   const [movies, setMovies] = useState([]);
@@ -9,6 +12,10 @@ const MovieListPage = () => {
   const [sortOption, setSortOption] = useState("Original");
   const [selectedDate, setSelectedDate] = useState("");
   const [carouselIndex, setCarouselIndex] = useState(0);
+  const imageMap = {
+    1: imagePath2,
+    2: imagePath3,
+  };
   const navigate = useNavigate();
 
   // Fetch movies on component mount
@@ -98,8 +105,8 @@ const MovieListPage = () => {
         >
           {movies.map((movie, index) => (
             <img
+              src={imageMap[movie.id] || imagePath}
               key={index}
-              src={movie.imagePath || "./assets/image1.png"} // Fallback to a default image
               alt={movie.title}
               className="carousel-item"
             />
@@ -142,7 +149,7 @@ const MovieListPage = () => {
           <div className="movie-item" key={movie.id}>
             <div className="movie-poster-section">
               <img
-                src={movie.imagePath || "/assets/image1.png"}
+                src={imageMap[movie.id] || imagePath}
                 alt={movie.title}
                 className="movie-poster"
               />
