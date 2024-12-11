@@ -55,7 +55,7 @@ const AddReviewPage = ({ movieId }) => {
           />
         </div>
         <div style={{ marginBottom: "10px" }}>
-          <label htmlFor="rating">Rating (1-5):</label>
+          <label htmlFor="rating">Rating (1-10):</label>
           <select
             id="rating"
             value={rating}
@@ -63,7 +63,7 @@ const AddReviewPage = ({ movieId }) => {
             required
             style={{ width: "100%", padding: "8px", marginTop: "5px" }}
           >
-            {[1, 2, 3, 4, 5].map((num) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
               <option key={num} value={num}>
                 {num}
               </option>
