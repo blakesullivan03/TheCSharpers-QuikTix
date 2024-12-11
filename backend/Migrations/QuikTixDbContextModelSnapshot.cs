@@ -22,21 +22,6 @@ namespace TheCSharpers_QuikTix.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("MovieId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("MovieTitle")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("TicketType")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("CartId");
 
                     b.ToTable("Carts");
@@ -122,7 +107,7 @@ namespace TheCSharpers_QuikTix.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CartId")
+                    b.Property<int?>("CartId")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsAvailable")
@@ -134,8 +119,8 @@ namespace TheCSharpers_QuikTix.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("PurchaseTime")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ShowtimeId")
                         .HasColumnType("INTEGER");
@@ -147,8 +132,6 @@ namespace TheCSharpers_QuikTix.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CartId");
-
-                    b.HasIndex("ShowtimeId");
 
                     b.ToTable("Tickets");
                 });
@@ -164,21 +147,9 @@ namespace TheCSharpers_QuikTix.Migrations
 
             modelBuilder.Entity("TheCSharpers_QuikTix.Models.Ticket", b =>
                 {
-                    b.HasOne("TheCSharpers_QuikTix.Models.Cart", "Cart")
+                    b.HasOne("TheCSharpers_QuikTix.Models.Cart", null)
                         .WithMany("Tickets")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TheCSharpers_QuikTix.Models.Showtime", "Showtime")
-                        .WithMany()
-                        .HasForeignKey("ShowtimeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cart");
-
-                    b.Navigation("Showtime");
+                        .HasForeignKey("CartId");
                 });
 
             modelBuilder.Entity("TheCSharpers_QuikTix.Models.Cart", b =>

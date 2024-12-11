@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TheCSharpers_QuikTix.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace QuikTix.Controllers
@@ -15,13 +16,57 @@ namespace QuikTix.Controllers
             _context = context;
         }
 
-        // Define a POST method for adding tickets to the cart
-        [HttpPost("add-to-cart")]
-        public IActionResult AddTicketToCart([FromBody] AddTicketRequest request)
+        // POST Method to Create Cart
+        [HttpPost("create-cart")]
+        public IActionResult CreateCart([FromBody] Cart request)
+        {
+            if (request == null || string.IsNullOrEmpty(request.CartId.ToString()))
+            {
+                return BadRequest("Invalid cart creation request.");
+            }
+
+            // Create a New Cart
+            var cart = new Cart
+            {
+                CartId = request.CartId, // Assuming Cart is associated with a User
+                Tickets = new List<Ticket>() // Initialize an empty ticket list
+            };
+
+            _context.Carts.Add(cart);
+            _context.SaveChanges();
+
+            return Ok(new { message = "Cart created successfully.", cart });
+        }
+
+
+        /// Define a POST method for adding tickets to the cart
+        [HttpPost("add-to-cart/{cartId}")]
+        public IActionResult AddTicketToCart(int cartId, [FromBody] AddTicketRequest request)
         {
             if (request == null || request.AdultTickets < 0 || request.ChildTickets < 0)
             {
                 return BadRequest("Invalid ticket data.");
+            }
+
+            // Retrieve the Cart
+            var cart = _context.Carts.FirstOrDefault(c => c.CartId == cartId);
+            if (cart == null)
+            {
+                return NotFound("Cart not found.");
+            }
+
+            // Retrieve the Showtime
+            var showtime = _context.Showtimes.FirstOrDefault(s => s.Id == request.ShowtimeId);
+            if (showtime == null)
+            {
+                return NotFound("Showtime not found.");
+            }
+
+            // Check Ticket Availability
+
+            if (request.AdultTickets > showtime.AdultTicketCount || request.ChildTickets > showtime.ChildTicketCount)
+            {
+                return BadRequest("Insufficient tickets available.");
             }
 
             // Define ticket prices (you can retrieve these from a database or another service)
@@ -31,40 +76,45 @@ namespace QuikTix.Controllers
             // Add adult tickets to the cart
             if (request.AdultTickets > 0)
             {
-                var adultCartItem = new Cart
+                var adultCartItem = new Ticket
                 {
                     MovieId = request.MovieId,
                     TicketType = "Adult",
                     Quantity = request.AdultTickets,
-                    Price = adultTicketPrice
+                    Price = adultTicketPrice * request.AdultTickets
                 };
-                _context.Carts.Add(adultCartItem);
+                cart.Tickets.Add(adultCartItem);
+                showtime.AdultTicketCount -= request.AdultTickets;
             }
 
             // Add child tickets to the cart
             if (request.ChildTickets > 0)
             {
-                var childCartItem = new Cart
+                var childCartItem = new Ticket
                 {
                     MovieId = request.MovieId,
                     TicketType = "Child",
                     Quantity = request.ChildTickets,
-                    Price = childTicketPrice
+                    Price = childTicketPrice * request.ChildTickets
                 };
-                _context.Carts.Add(childCartItem);
+                cart.Tickets.Add(childCartItem);
+                showtime.ChildTicketCount -= request.ChildTickets;
             }
 
-            // Update the total price of the cart
+            _context.Carts.Update(cart);
+            _context.Showtimes.Update(showtime);
             _context.SaveChanges();
 
-            return Ok(new { message = "Tickets added to cart.", cart = _context.Carts });
+            return Ok(new { message = "Tickets added to cart.", cart });
         }
+
+
 
         // Get Cart By ID
         [HttpGet("get-cart/{cartId}")]
         public IActionResult GetCartById(int cartId)
         {
-            var cart = _context.Carts.Find(cartId);
+            var cart = _context.Carts.Include(c => c.Tickets).FirstOrDefault(c => c.CartId == cartId);
             if (cart == null)
             {
                 return NotFound();
@@ -80,6 +130,7 @@ namespace QuikTix.Controllers
             return Ok(carts);
         }
 
+        // Clear Cart
         [HttpDelete("clear-cart")]
         public IActionResult ClearCart()
         {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovies } from '../apiService';
-import Showtime from './Showtime';
+import Showtime from './Showtime.jsx';
 
 const MovieDetailsPage = () => {
 

@@ -13,9 +13,14 @@ export const getMovies = async () => {
   return response.data;
 };
 
-export const addTicketToCart = async (movieId, { showtimeId, adultTickets, childTickets }) => {
+export const createCart = async () => {
+  const response = await api.post("/Cart/create-cart", {cartId: 0});
+  return response.data;
+};
+
+export const addTicketToCart = async (cartId, { movieId, showtimeId, adultTickets, childTickets }) => {
   // Send a POST request to add tickets to the cart
-  const response = await api.post("/Cart/add-to-cart", {
+  const response = await api.post(`/Cart/add-to-cart/${cartId}`, {
     movieId,
     showtimeId,
     adultTickets,
@@ -25,8 +30,13 @@ export const addTicketToCart = async (movieId, { showtimeId, adultTickets, child
   return response.data;
 };
 
-export const getCart = async () => {
-  const response = await api.get("/Cart/get-cart");
+export const getCart = async (cartId) => {
+  const response = await api.get(`/Cart/get-cart/${cartId}`);
+  return response.data;
+};
+
+export const getAllCarts = async () => {
+  const response = await api.get("/Cart/get-all-carts");
   return response.data;
 };
 

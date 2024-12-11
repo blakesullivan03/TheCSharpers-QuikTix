@@ -1,14 +1,7 @@
-// src/components/Checkout.js
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getCart } from '../apiService';
 
-/* Simulating cart data
-const cartData = {
-  tickets: [
-    { type: 'Adult', quantity: 2, price: 10 },
-    { type: 'Child', quantity: 3, price: 5 },
-  ]
-};*/
 
 const PaymentPage = () => {
   const [cardNumber, setCardNumber] = useState('');
@@ -17,10 +10,23 @@ const PaymentPage = () => {
   const [cvv, setCvv] = useState('');
   const [paymentResult, setPaymentResult] = useState('');
   const [errors, setErrors] = useState({});
+  const [cart, setCart] = useState({ cartId: null, tickets: [] });
+  const { cartId } = useParams();
+
   const navigate = useNavigate();
 
-  //const totalAmount = cartData.tickets.reduce((acc, ticket) => acc + ticket.quantity * ticket.price, 0);
-  //const totalWithTaxes = totalAmount * 0.07 + totalAmount;
+  useEffect(() => {
+        getCart(cartId)
+            .then((data) => {
+                console.log("Cart Data:", data);
+                setCart(data);
+            })
+            .catch((error) => console.error("Failed to fetch cart data:", error));
+    }, [cartId]);
+
+
+  const totalAmount = cart.tickets.reduce((acc, ticket) => acc + ticket.quantity * ticket.price, 0);
+  const totalWithTaxes = totalAmount * 0.07 + totalAmount;
 
   const validateCardNumber = (number) => /\d{4}-\d{4}-\d{4}-\d{4}/.test(number);
   const validateExpiryDate = (date) => /^\d{2}\/\d{2}$/.test(date);
@@ -61,8 +67,8 @@ return (
 
         <div className="cart-summary">
             <h2>Cart Summary</h2>
-            {/* <p>Total Cost: ${totalAmount.toFixed(2)}</p>
-            <p>Total Cost with Taxes: ${(totalWithTaxes).toFixed(2)}</p> */}
+            <p>Total Cost: ${totalAmount.toFixed(2)}</p>
+            <p>Total Cost with Taxes: ${(totalWithTaxes).toFixed(2)}</p>
         </div>
 
         <h3>Enter Payment Details</h3>

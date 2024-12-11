@@ -14,14 +14,14 @@ namespace TheCSharpers_QuikTix.Services
             _context = context;
         }
 
-        public Ticket CreateTicket(int showtimeId, string ticketType, decimal price, int cartId)
+        public Ticket CreateTicket(int showtimeId, string ticketType, decimal price)
         {
             var ticket = new Ticket
             {
                 ShowtimeId = showtimeId,
                 TicketType = ticketType,
                 Price = price,
-                CartId = cartId
+                //CartId = cartId
             };
 
             _context.Tickets.Add(ticket);
@@ -46,7 +46,7 @@ namespace TheCSharpers_QuikTix.Services
                     MovieId = movieId,
                     TicketType = ticketType,
                     Price = GetTicketPrice(movieId), // Assuming you have logic to calculate price
-                    PurchaseTime = DateTime.Now
+                    //PurchaseTime = DateTime.Now
                 };
 
                 _context.Tickets.Add(ticket);

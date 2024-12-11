@@ -20,8 +20,8 @@ function App() {
         <Route path="/movies/:movieId" element={<MovieDetailsPage />} />
         <Route path="/movies/:movieId/add-review" element={<AddReviewPage />} />
         <Route path="/movies/:movieId/reviews" element={<ReviewPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/payment-page" element={<PaymentPage />} />
+        <Route path="/cart/:cartId" element={<CartPage />} />
+        <Route path="/payment-page/:cartId" element={<PaymentPage />} />
       </Routes>
     </Router>
   );

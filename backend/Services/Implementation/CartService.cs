@@ -13,15 +13,12 @@ namespace TheCSharpers_QuikTix.Services
         }
 
         // Create a new cart for a user or movie
-        public Cart CreateCart(int movieId, string movieTitle, string ticketType, int quantity, decimal price)
+        public Cart CreateCart(int cartId, List<Ticket> tickets)
         {
             var cart = new Cart
             {
-                MovieId = movieId,
-                MovieTitle = movieTitle,
-                TicketType = ticketType,
-                Quantity = quantity,
-                Price = price
+                CartId = cartId,
+                Tickets = tickets
             };
 
             _context.Carts.Add(cart);
@@ -43,8 +40,13 @@ namespace TheCSharpers_QuikTix.Services
         // Get the cart by ID
         public Cart GetCart(int cartId)
         {
-            return _context.Carts.Include(c => c.Tickets)
-                                 .FirstOrDefault(c => c.CartId == cartId);
+            var cart = _context.Carts.Include(c => c.Tickets)
+                                      .FirstOrDefault(c => c.CartId == cartId);
+            if (cart == null)
+            {
+                throw new InvalidOperationException($"Cart with ID {cartId} not found.");
+            }
+            return cart;
         }
 
         // Update the quantity of tickets in the cart
@@ -53,8 +55,8 @@ namespace TheCSharpers_QuikTix.Services
             var cart = _context.Carts.FirstOrDefault(c => c.CartId == cartId);
             if (cart != null)
             {
-                cart.Quantity = newQuantity;
-                cart.Price = newPrice;
+                //cart.Quantity = newQuantity;
+                //cart.Price = newPrice;
                 _context.SaveChanges();
             }
         }

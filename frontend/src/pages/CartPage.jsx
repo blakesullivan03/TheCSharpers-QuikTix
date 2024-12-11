@@ -1,31 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getCart, removeTicketFromCart } from "../apiService";
 
 function CartPage() {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState({ cartId: null, tickets: [] });
   const navigate = useNavigate();
+  const { cartId } = useParams();
 
   useEffect(() => {
-    getCart()
-      .then((data) => setCart(data))
+    getCart(cartId)
+      .then((data) => {
+        console.log("Cart Data:", data);
+        setCart(data);
+      })
       .catch((error) => console.error("Failed to fetch cart data:", error));
-  }, []);
+  }, [cartId]);
 
   const handleRemoveFromCart = (ticketId) => {
     removeTicketFromCart(ticketId)
       .then(() => {
-        setCart((prevCart) => prevCart.filter((ticket) => ticket.cartId !== ticketId));
+        setCart((prevCart) => ({
+          ...prevCart,
+          tickets: prevCart.tickets.filter((ticket) => ticket.id !== ticketId),
+        }));
       })
       .catch((error) => console.error("Failed to remove ticket:", error));
   };
 
-  const totalPrice = cart.reduce(
+  // Calculate Total Price
+  const totalPrice = cart.tickets.reduce(
     (total, ticket) => total + ticket.price * ticket.quantity,
     0
   );
 
-  if (cart.length === 0) {
+  if (cart.tickets.length === 0) {
     return (
       <div>
         <h2>Your Cart is Empty</h2>
@@ -38,16 +46,15 @@ function CartPage() {
     <div>
       <h1>Your Cart</h1>
       <ul>
-        {cart.map((ticket) => (
-          <li key={ticket.cartId}>
+        {cart.tickets.map((ticket) => (
+          <li key={ticket.id}>
             <div>
-              {console.log(ticket)}
-              <h3>Movie: {ticket.movieId}</h3>
+              <h3>Movie ID: {ticket.movieId}</h3>
               <p>Ticket Type: {ticket.ticketType}</p>
               <p>Quantity: {ticket.quantity}</p>
               <p>Price per Ticket: ${ticket.price.toFixed(2)}</p>
               <p>Total: ${(ticket.price * ticket.quantity).toFixed(2)}</p>
-              <button onClick={() => handleRemoveFromCart(ticket.cartId)}>
+              <button onClick={() => handleRemoveFromCart(ticket.id)}>
                 Remove
               </button>
             </div>
@@ -55,7 +62,7 @@ function CartPage() {
         ))}
       </ul>
       <h3>Total Price: ${totalPrice.toFixed(2)}</h3>
-      <button onClick={() => navigate("/payment-page")}>Proceed to Checkout</button>
+      <button onClick={() => navigate(`/payment-page/${cartId}`)}>Proceed to Checkout</button>
     </div>
   );
 }

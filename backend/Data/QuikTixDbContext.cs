@@ -36,23 +36,29 @@ public class QuikTixDbContext : DbContext
         modelBuilder.Entity<Cart>(entity =>
         {
             entity.HasKey(c => c.CartId);  // Setting CartId as the primary key
-            entity.Property(c => c.Price)
-                .HasColumnType("decimal(18,2)");  // Define price precision and scale
+            entity.Property(c => c.CartId)
+                .ValueGeneratedOnAdd();  // Auto-generate CartId
+            //entity.Property(c => c.Price)
+                //.HasColumnType("decimal(18,2)");  // Define price precision and scale
         });
 
         modelBuilder.Entity<Ticket>(entity =>
                 {
                     entity.HasKey(t => t.Id);  // Setting Id as the primary key
+                    entity.Property(t => t.Id)
+                        .ValueGeneratedOnAdd();
                     entity.Property(t => t.ShowtimeId)
+                        .IsRequired();
+                    entity.Property(t => t.MovieId)
                         .IsRequired();
                     entity.Property(t => t.TicketType)
                         .IsRequired();
                     entity.Property(t => t.Price)
                         .IsRequired();
-                    entity.Property(t => t.PurchaseTime)
-                        .IsRequired();
-                    entity.Property(t => t.CartId)
-                    .IsRequired();
+                    //entity.Property(t => t.PurchaseTime)
+                        //.IsRequired();
+                    //entity.Property(t => t.CartId)
+                    //.IsRequired();
                     entity.Property(t => t.MovieId)
                     .IsRequired();
                     entity.Property(t => t.IsAvailable)

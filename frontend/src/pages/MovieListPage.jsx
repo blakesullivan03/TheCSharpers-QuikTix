@@ -83,6 +83,7 @@ const MovieListPage = () => {
     }
   };
 
+
   return (
     <div className="movie-list-page">
       {/* Carousel Section */}
@@ -165,7 +166,7 @@ const MovieListPage = () => {
                         <p>Child Tickets: {showtime.childTicketCount}</p>
                         <button
                           onClick={() =>
-                            navigate(`/showtimes/${showtime.id}/book`)
+                            navigate(`/movies/${movie.id}`)
                           }
                           className="book-now-button"
                         >
